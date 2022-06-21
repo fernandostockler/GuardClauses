@@ -11,7 +11,7 @@ public class ArgumentNullExceptionTests
     public const TestClass? testClass = null;
 
     [Test]
-    public void TestNull()
+    public void NullTest()
     {
         string? stringNull = null;
 
@@ -20,21 +20,19 @@ public class ArgumentNullExceptionTests
     }
 
     [TestCase(testClass)]
-    public void TestNullWithCustomClass(TestClass? value)
+    public void NullTestWithCustomClass(TestClass? value)
     {
         _ = Assert.Throws<ArgumentNullException>(() => Guard.Against.Null(value, "testParam"));
     }
 
     [Test]
-    public void TestNullMessage()
+    public void NullMessageTest()
     {
         string? stringNull = null;
-        string paramName = "stringNull";
         string expected = "Parameter can't be null. (Parameter 'stringNull')";
         try
         {
-            _ = Guard.Against.Null(stringNull, paramName);
-            Assert.Fail();
+            _ = Guard.Against.Null(stringNull, "stringNull");
         }
         catch (Exception ex)
         {
@@ -43,7 +41,22 @@ public class ArgumentNullExceptionTests
     }
 
     [Test]
-    public void TestNullOrWhiteSpace()
+    public void NullMessageTestWithCustomMessage()
+    {
+        string? stringNull = null;
+        string expected = "Test message. (Parameter 'stringNull')";
+        try
+        {
+            _ = Guard.Against.Null(stringNull, "stringNull","Test message.");
+        }
+        catch (Exception ex)
+        {
+            Assert.That(ex.Message, Is.EqualTo(expected));
+        }
+    }
+
+    [Test]
+    public void NullOrWhiteSpaceTest()
     {
         string test = "     ";
         _ = Assert.Throws<ArgumentException>(
@@ -51,7 +64,7 @@ public class ArgumentNullExceptionTests
     }
 
     [Test]
-    public void TestNullOrWhiteSpaceWithSomeValue()
+    public void NullOrWhiteSpaceTestWithSomeValue()
     {
         string test = "some";
         Assert.DoesNotThrow(
@@ -59,7 +72,7 @@ public class ArgumentNullExceptionTests
     }
 
     [Test]
-    public void TestNullOrEmptyWithString()
+    public void NullOrEmptyTestWithString()
     {
         string test = string.Empty;
         _ = Assert.Throws<ArgumentException>(
@@ -67,7 +80,7 @@ public class ArgumentNullExceptionTests
     }
 
     [Test]
-    public void TestNullOrEmptyWithGuid()
+    public void NullOrEmptyTestWithGuid()
     {
         Guid test = Guid.Empty;
         _ = Assert.Throws<ArgumentException>(
@@ -75,7 +88,7 @@ public class ArgumentNullExceptionTests
     }
 
     [Test]
-    public void TestNullOrEmptyWithIEmptyEnumerableOfT()
+    public void NullOrEmptyTestWithIEmptyEnumerableOfT()
     {
         IEnumerable<int> test = new List<int>();
         _ = Assert.Throws<ArgumentException>(
@@ -83,7 +96,7 @@ public class ArgumentNullExceptionTests
     }
 
     [Test]
-    public void TestNullOrEmptyWithNullIEnumerableOfT()
+    public void NullOrEmptyTestWithNullIEnumerableOfT()
     {
         IEnumerable<int> test = null;
         _ = Assert.Throws<ArgumentNullException>(
@@ -91,7 +104,7 @@ public class ArgumentNullExceptionTests
     }
 
     [Test]
-    public void TestNullOrEmptyWithNotEmptyIEnumerableOfT()
+    public void NullOrEmptyTestWithNotEmptyIEnumerableOfT()
     {
         IEnumerable<int> test = new List<int>() { 1 };
         Assert.DoesNotThrow(
@@ -99,7 +112,7 @@ public class ArgumentNullExceptionTests
     }
 
     [Test]
-    public void TestNullOrEmptyWithInt()
+    public void NullOrEmptyTestWithInt()
     {
         int test = default;
         Assert.DoesNotThrow(
