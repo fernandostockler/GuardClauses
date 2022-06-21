@@ -38,7 +38,7 @@ public static partial class GuardClausesExtensions
             : input;
     }
 
-    public static string InvalidFormat([NotNull] this IGuardClause guardClause,
+    public static string InvalidRegexFormat([NotNull] this IGuardClause guardClause,
         [NotNull] string input,
         [NotNull] string pattern,
         [NotNull][CallerArgumentExpression("input")] string paramName = "Undefined",
@@ -57,7 +57,7 @@ public static partial class GuardClausesExtensions
         [NotNull][CallerArgumentExpression("input")] string paramName = "Undefined",
         string? message = null)
     {
-        if (input == null) throw new ArgumentNullException(nameof(predicate));
+        if (input == null) throw new ArgumentNullException(nameof(input));
 
         return !predicate(input)
             ? throw new ArgumentException(message ?? $"Input {paramName} did not satisfy the conditions.", paramName)

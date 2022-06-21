@@ -7,17 +7,8 @@ using NUnit.Framework.Constraints;
 public class ArgumentNullExceptionTests
 {
 
-    public class TestClass
-    {
-    }
-
+    public class TestClass { }
     public const TestClass? testClass = null;
-
-    [SetUp]
-    public void Setup()
-    {
-
-    }
 
     [Test]
     public void TestNull()
