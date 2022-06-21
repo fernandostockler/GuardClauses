@@ -2,7 +2,6 @@ namespace UnityTests;
 
 using GuardClauses;
 using GuardClauses.Extensions;
-using NUnit.Framework.Constraints;
 
 public class ArgumentNullExceptionTests
 {
@@ -47,7 +46,7 @@ public class ArgumentNullExceptionTests
         string expected = "Test message. (Parameter 'stringNull')";
         try
         {
-            _ = Guard.Against.Null(stringNull, "stringNull","Test message.");
+            _ = Guard.Against.Null(stringNull, "stringNull", "Test message.");
         }
         catch (Exception ex)
         {

@@ -1,20 +1,22 @@
 ﻿namespace GuardClauses.Extensions;
 
 using System;
+using System.Runtime.CompilerServices;
+using System.Diagnostics.CodeAnalysis;
 
 public static partial class GuardClausesExtensions
 {
-    public static T Null<T>(this IGuardClause guardClause,
+    public static T Null<T>([NotNull] this IGuardClause guardClause,
         T input,
-        string paramName,
+        [NotNull][CallerArgumentExpression("input")] string paramName = "Undefined",
         string message = "Parameter can't be null.")
     {
         return input is null ? throw new ArgumentNullException(paramName, message) : input;
     }
 
-    public static T NullOrEmpty<T>(this IGuardClause guardClause,
+    public static T NullOrEmpty<T>([NotNull] this IGuardClause guardClause,
         T input,
-        string paramName,
+        [NotNull][CallerArgumentExpression("input")] string paramName = "Undefined",
         string message = "Parameter can't be empty.")
     {
         _ = Guard.Against.Null(input, paramName);
@@ -31,9 +33,9 @@ public static partial class GuardClausesExtensions
         };
     }
 
-    public static IEnumerable<T> NullOrEmpty<T>(this IGuardClause guardClause,
+    public static IEnumerable<T> NullOrEmpty<T>([NotNull] this IGuardClause guardClause,
         IEnumerable<T> values,
-        string paramName,
+        [NotNull][CallerArgumentExpression("values")] string paramName = "Undefined",
         string message = "Parameter can't be empty.")
     {
         _ = Guard.Against.Null(values, paramName);
@@ -41,9 +43,9 @@ public static partial class GuardClausesExtensions
         return !values.Any() ? throw new ArgumentException(message, paramName) : values;
     }
 
-    public static string NullOrWhiteSpace(this IGuardClause guardClause,
+    public static string NullOrWhiteSpace([NotNull] this IGuardClause guardClause,
         string input,
-        string paramName,
+        [NotNull][CallerArgumentExpression("input")] string paramName = "Undefined",
         string message = "Parameter can't be white spaces.")
     {
         _ = Guard.Against.NullOrEmpty(input, paramName);

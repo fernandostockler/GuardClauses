@@ -2,15 +2,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 public static partial class GuardClausesExtensions
 {
-    public static T OutOfRange<T>(this IGuardClause guardClause,
+    public static T OutOfRange<T>([NotNull] this IGuardClause guardClause,
         T input,
         T minimunValue,
         T maximunValue,
-        string paramName,
+        [NotNull][CallerArgumentExpression("input")] string paramName = "Undefined",
         string? message = null) where T : IComparable, IComparable<T>
     {
         if (minimunValue.CompareTo(maximunValue) > 0)
@@ -25,11 +27,11 @@ public static partial class GuardClausesExtensions
         return input;
     }
 
-    public static IEnumerable<T> OutOfRange<T>(this IGuardClause guardClause,
+    public static IEnumerable<T> OutOfRange<T>([NotNull] this IGuardClause guardClause,
         IEnumerable<T> values,
         T minimunValue,
         T maximunValue,
-        string paramName,
+        [NotNull][CallerArgumentExpression("values")] string paramName = "Undefined",
         string? message = null) where T : IComparable, IComparable<T>
     {
         if (minimunValue.CompareTo(maximunValue) > 0)
