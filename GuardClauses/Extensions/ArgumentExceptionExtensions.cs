@@ -1,12 +1,10 @@
 ﻿namespace GuardClauses.Extensions;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 public static partial class GuardClausesExtensions
 {
@@ -21,9 +19,9 @@ public static partial class GuardClausesExtensions
     }
 
     public static T Negative<T>([NotNull] this IGuardClause guardClause,
-            T input,
-            [NotNull][CallerArgumentExpression("input")] string paramName = "Undefined",
-            string? message = null) where T : struct, IComparable
+        T input,
+        [NotNull][CallerArgumentExpression("input")] string paramName = "Undefined",
+        string? message = null) where T : struct, IComparable
     {
         return input.CompareTo(default(T)) < 0
             ? throw new ArgumentException(message ?? $"Input {paramName} cannot be negative.", paramName)

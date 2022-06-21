@@ -1,6 +1,6 @@
 ﻿namespace GuardClauses.Extensions;
+
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 public static partial class GuardClausesExtensions
 {
@@ -48,6 +48,6 @@ public static partial class GuardClausesExtensions
     {
         _ = Guard.Against.NullOrEmpty(input, paramName);
 
-         return input.Trim().Length == 0 ? throw new ArgumentException(message, paramName) : input;
+        return input.Trim().Length == 0 ? throw new ArgumentException(message, paramName) : input;
     }
 }

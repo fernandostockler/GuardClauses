@@ -2,33 +2,33 @@
 using GuardClauses.Extensions;
 using System.Reflection.Metadata;
 
-string expected = "Parameter can't be null. (Parameter 'testValue')";
-
 Console.WriteLine("GuardClausesDemo" + Environment.NewLine);
-//Console.WriteLine("Test value: null");
-//Console.WriteLine($"Expected message: {expected}");
 
-//try
-//{
-//	string testValue = null;
-//    var t = Guard.Against.Null(testValue, "testValue");
-//}
-//catch (Exception ex)
-//{
-//    //string actual = "Parameter can't be null.";
-//    Console.WriteLine($"  Actual message: {ex.Message}");
-//    Console.WriteLine(String.Equals(ex.Message, expected));
-//}
-
-
-IEnumerable<int> test = new List<int>();
-
+IEnumerable<string> nullTest = null;
+IEnumerable<int> test = new List<int>() { 1, 3, 5, 7, 9 };
+string testValue = null;
 try
 {
-    _ = Guard.Against.NullOrEmpty(test, "testParam");
+    Guard.Against.Null(testValue, "testValue");
+    //Guard.Against.NullOrEmpty(nullTest, "testParam");
+    //Guard.Against.InvalidInput<int>(42, x => x < 40);
+    //Guard.Against.OutOfRange(test, 3, 9, "paramTest");
+    //Guard.Against.EnumOutOfRange<TestEnum>((TestEnum)5);
+    //Guard.Against.Zero<int>(0);
+    //Guard.Against.Negative<double>(-5.6);
 }
 catch (Exception ex)
 {
-
     Console.WriteLine(ex.Message);
+    Console.WriteLine("-------------------------------------------------------------");
+    Console.WriteLine();
+    Console.WriteLine(ex.ToString());
+}
+
+public enum TestEnum
+{
+    One,
+    Two,
+    Three,
+    Four
 }
