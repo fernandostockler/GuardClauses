@@ -37,14 +37,13 @@ public static partial class GuardClausesExtensions
         if (minimunValue.CompareTo(maximunValue) > 0)
             throw new ArgumentException($"Minimun value ({minimunValue}) must be below or equal maximun value ({maximunValue}).", nameof(minimunValue));
 
-        foreach (var value in values.Where(
-            value => value.CompareTo(minimunValue) < 0 ||
-                                value.CompareTo(maximunValue) > 0))
+        foreach (T value in values.Where(value =>
+            value.CompareTo(minimunValue) < 0 || value.CompareTo(maximunValue) > 0))
         {
             if (message is null)
                 message = $"Input ({value}) was out of range. Minimun: {minimunValue}, Maximun: {maximunValue}";
 
-            throw new ArgumentOutOfRangeException(nameof(values), value, message);
+            throw new ArgumentOutOfRangeException(nameof(values), values, message);
         }
 
         return values;
