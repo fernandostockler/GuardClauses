@@ -1,7 +1,4 @@
-namespace UnityTests;
-
-using GuardClauses;
-using GuardClauses.Extensions;
+namespace UnitTests;
 
 public class ArgumentNullExceptionTests
 {
@@ -14,14 +11,15 @@ public class ArgumentNullExceptionTests
     {
         string? stringNull = null;
 
-        _ = Assert.Throws<ArgumentNullException>(
-            () => _ = Guard.Against.Null(stringNull, "stringNull"));
+        _ = Assert.Throws<ArgumentNullException>(() =>
+            _ = Guard.Against.Null(stringNull, "stringNull"));
     }
 
     [TestCase(testClass)]
     public void NullTestWithCustomClass(TestClass? value)
     {
-        _ = Assert.Throws<ArgumentNullException>(() => Guard.Against.Null(value, "testParam"));
+        _ = Assert.Throws<ArgumentNullException>(() =>
+            Guard.Against.Null(value, "testParam"));
     }
 
     [Test]
@@ -58,63 +56,63 @@ public class ArgumentNullExceptionTests
     public void NullOrWhiteSpaceTest()
     {
         string test = "     ";
-        _ = Assert.Throws<ArgumentException>(
-            () => _ = Guard.Against.NullOrWhiteSpace(test, "paraName"));
+        _ = Assert.Throws<ArgumentException>(() =>
+            _ = Guard.Against.NullOrWhiteSpace(test, "paraName"));
     }
 
     [Test]
     public void NullOrWhiteSpaceTestWithSomeValue()
     {
         string test = "some";
-        Assert.DoesNotThrow(
-            () => _ = Guard.Against.NullOrWhiteSpace(test, "paraName"));
+        Assert.DoesNotThrow(() =>
+            _ = Guard.Against.NullOrWhiteSpace(test, "paraName"));
     }
 
     [Test]
     public void NullOrEmptyTestWithString()
     {
         string test = string.Empty;
-        _ = Assert.Throws<ArgumentException>(
-            () => _ = Guard.Against.NullOrEmpty(test, "testParam"));
+        _ = Assert.Throws<ArgumentException>(() =>
+            _ = Guard.Against.NullOrEmpty(test, "testParam"));
     }
 
     [Test]
     public void NullOrEmptyTestWithGuid()
     {
         Guid test = Guid.Empty;
-        _ = Assert.Throws<ArgumentException>(
-            () => _ = Guard.Against.NullOrEmpty(test, "testParam"));
+        _ = Assert.Throws<ArgumentException>(() =>
+            _ = Guard.Against.NullOrEmpty(test, "testParam"));
     }
 
     [Test]
     public void NullOrEmptyTestWithIEmptyEnumerableOfT()
     {
         IEnumerable<int> test = new List<int>();
-        _ = Assert.Throws<ArgumentException>(
-            () => _ = Guard.Against.NullOrEmpty(test, "testParam"));
+        _ = Assert.Throws<ArgumentException>(() =>
+            _ = Guard.Against.NullOrEmpty(test, "testParam"));
     }
 
     [Test]
     public void NullOrEmptyTestWithNullIEnumerableOfT()
     {
         IEnumerable<int> test = null;
-        _ = Assert.Throws<ArgumentNullException>(
-            () => _ = Guard.Against.NullOrEmpty(test, "testParam"));
+        _ = Assert.Throws<ArgumentNullException>(() =>
+            _ = Guard.Against.NullOrEmpty(test, "testParam"));
     }
 
     [Test]
     public void NullOrEmptyTestWithNotEmptyIEnumerableOfT()
     {
         IEnumerable<int> test = new List<int>() { 1 };
-        Assert.DoesNotThrow(
-            () => _ = Guard.Against.NullOrEmpty(test, "testParam"));
+        Assert.DoesNotThrow(() =>
+            _ = Guard.Against.NullOrEmpty(test, "testParam"));
     }
 
     [Test]
     public void NullOrEmptyTestWithInt()
     {
         int test = default;
-        Assert.DoesNotThrow(
-            () => _ = Guard.Against.NullOrEmpty(test, "testParam"));
+        Assert.DoesNotThrow(() =>
+            _ = Guard.Against.NullOrEmpty(test, "testParam"));
     }
 }

@@ -1,9 +1,4 @@
-﻿namespace UnityTests;
-
-using GuardClauses;
-using GuardClauses.Extensions;
-using System;
-using System.Numerics;
+﻿namespace UnitTests;
 
 public class ArgumentOutOfRangeExceptionTests
 {
@@ -31,36 +26,26 @@ public class ArgumentOutOfRangeExceptionTests
 
     [Test]
     public void OutOfRangeTestWithMinMoreThanMax()
-    {
-        _ = Assert.Throws<ArgumentException>(
-            () => Guard.Against.OutOfRange(15, 50, 10, "testParm"));
-    }
+    => _ = Assert.Throws<ArgumentException>(() =>
+        Guard.Against.OutOfRange(15, 50, 10, "testParm"));
 
     [Test]
     public void OutOfRangeTestWithCollectionAndBadData()
-    {
-        _ = Assert.Throws<ArgumentOutOfRangeException>(
-            () => Guard.Against.OutOfRange(new List<int> { 1, 2, 3 }, 5, 10, "testParm"));
-    }
+    => _ = Assert.Throws<ArgumentOutOfRangeException>(() =>
+        Guard.Against.OutOfRange(new List<int> { 1, 2, 3 }, 5, 10, "testParm"));
 
     [Test]
     public void OutOfRangeTestWithCollectionAndGoodData()
-    {
-        Assert.DoesNotThrow(
-            () => Guard.Against.OutOfRange(new List<int> { 6, 8, 10 }, 5, 10, "testParm"));
-    }
+    => Assert.DoesNotThrow(() =>
+        Guard.Against.OutOfRange(new List<int> { 6, 8, 10 }, 5, 10, "testParm"));
 
     [Test]
     public void OutOfRangeTestWithCollectionAndMinMoreThanMax()
-    {
-        _ = Assert.Throws<ArgumentException>(
-            () => Guard.Against.OutOfRange(new List<int> { 1, 40, 60 }, 50, 10, "testParm"));
-    }
+    => _ = Assert.Throws<ArgumentException>(() =>
+        Guard.Against.OutOfRange(new List<int> { 1, 40, 60 }, 50, 10, "testParm"));
 
     [Test]
     public void OutOfRangeTestWithCollectionAndMaxLessThanMin()
-    {
-        _ = Assert.Throws<ArgumentException>(
-            () => Guard.Against.OutOfRange(new List<int> { -5, -1, 0, 5 }, 0, -5, "testParm"));
-    }
+    => _ = Assert.Throws<ArgumentException>(() =>
+        Guard.Against.OutOfRange(new List<int> { -5, -1, 0, 5 }, 0, -5, "testParm"));
 }

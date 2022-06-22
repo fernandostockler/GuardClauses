@@ -7,8 +7,11 @@ Console.WriteLine("GuardClausesDemo" + Environment.NewLine);
 IEnumerable<string> nullTest = null;
 IEnumerable<int> test = new List<int>() { 1, 3, 5, 7, 9 };
 string testValue = null;
+Order? order = new(1,5,"notes");
 try
 {
+    var order1 = Guard.Against.Null(order);
+    Console.WriteLine($"Order: Id={order1.Id}, Stars={order1.Stars}, Notes={order1.Notes}");
     //Guard.Against.Null(testValue, "testValue");
     //Guard.Against.NullOrEmpty(nullTest, "testParam");
     //Guard.Against.InvalidInput<int>(42, x => x < 40);
@@ -25,11 +28,11 @@ catch (Exception ex)
     Console.WriteLine(ex.ToString());
 }
 
-var order1 = new Order(-5, 1, "notes");
+//var order1 = new Order(-5, 1, "notes");
 //var order2 = new Order(1, -34, "notes");
 //var order3 = new Order(2, 2, "1234567890123456789012345678901");
 
-Console.WriteLine(order1.Id);
+//Console.WriteLine(order1.Id);
 //Console.WriteLine(order2.Stars);
 //Console.WriteLine(order3.Notes);
 public enum TestEnum

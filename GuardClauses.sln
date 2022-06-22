@@ -9,9 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{909FAD15
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuardClauses", "GuardClauses\GuardClauses.csproj", "{1C247CBB-0548-464E-A760-8015F8B892ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityTests", "UnityTests\UnityTests.csproj", "{23E987FA-1F96-49CA-8DAF-5B53DA81439F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnityTests\UnitTests.csproj", "{23E987FA-1F96-49CA-8DAF-5B53DA81439F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuardClausesDemo", "GuardClausesDemo\GuardClausesDemo.csproj", "{D2E902B8-D048-4918-BB15-45B109C1876E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuardClausesDemo", "GuardClausesDemo\GuardClausesDemo.csproj", "{D2E902B8-D048-4918-BB15-45B109C1876E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

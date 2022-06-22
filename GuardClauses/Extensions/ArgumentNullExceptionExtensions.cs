@@ -6,6 +6,16 @@ using System.Diagnostics.CodeAnalysis;
 
 public static partial class GuardClausesExtensions
 {
+    /// <summary>
+    /// Throws a ArgumentNullException ir the input is null.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="guardClause"></param>
+    /// <param name="input"></param>
+    /// <param name="paramName"></param>
+    /// <param name="message"></param>
+    /// <returns>The input.</returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static T Null<T>([NotNull] this IGuardClause guardClause,
         T input,
         [NotNull][CallerArgumentExpression("input")] string paramName = "Undefined",
