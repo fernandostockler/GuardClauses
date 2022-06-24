@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
@@ -11,7 +10,7 @@ public static partial class GuardClausesExtensions
 {
     public static T Zero<T>([NotNull] this IGuardClause guardClause,
         T input,
-        [NotNull][CallerArgumentExpression("input")] string paramName = "",
+        [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null) where T : struct
     {
         return EqualityComparer<T>.Default.Equals(input, default)
@@ -21,7 +20,7 @@ public static partial class GuardClausesExtensions
 
     public static T Negative<T>([NotNull] this IGuardClause guardClause,
         T input,
-        [NotNull][CallerArgumentExpression("input")] string paramName = "",
+        [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null) where T : struct, IComparable
     {
         return input.CompareTo(default(T)) < 0
@@ -31,7 +30,7 @@ public static partial class GuardClausesExtensions
 
     public static T NegativeOrZero<T>([NotNull] this IGuardClause guardClause,
         T input,
-        [NotNull][CallerArgumentExpression("input")] string paramName = "",
+        [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null) where T : struct, IComparable
     {
         return input.CompareTo(default(T)) <= 0
@@ -42,7 +41,7 @@ public static partial class GuardClausesExtensions
     public static string InvalidRegexFormat([NotNull] this IGuardClause guardClause,
         [NotNull] string input,
         [NotNull] string pattern,
-        [NotNull][CallerArgumentExpression("input")] string paramName = "",
+        [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null)
     {
         var match = Regex.Match(input, pattern);
@@ -55,7 +54,7 @@ public static partial class GuardClausesExtensions
     public static T InvalidInput<T>([NotNull] this IGuardClause guardClause,
         [NotNull] T input,
         [NotNull] Predicate<T> predicate,
-        [NotNull][CallerArgumentExpression("input")] string paramName = "",
+        [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null)
     {
         if (input == null) throw new ArgumentNullException(nameof(input));

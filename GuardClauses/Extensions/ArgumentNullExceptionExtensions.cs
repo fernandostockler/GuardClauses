@@ -8,7 +8,7 @@ public static partial class GuardClausesExtensions
 {
     public static T Null<T>([NotNull] this IGuardClause guardClause,
         T input,
-        [NotNull][CallerArgumentExpression("input")] string paramName = "",
+        [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string message = "Parameter cannot be null.")
     {
         return input is null ? throw new ArgumentNullException(paramName, message) : input;
@@ -16,7 +16,7 @@ public static partial class GuardClausesExtensions
 
     public static T NullOrEmpty<T>([NotNull] this IGuardClause guardClause,
         T input,
-        [NotNull][CallerArgumentExpression("input")] string paramName = "",
+        [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string message = "Parameter cannot be empty.")
     {
         _ = Guard.Against.Null(input, paramName);
@@ -35,7 +35,7 @@ public static partial class GuardClausesExtensions
 
     public static IEnumerable<T> NullOrEmpty<T>([NotNull] this IGuardClause guardClause,
         IEnumerable<T> values,
-        [NotNull][CallerArgumentExpression("values")] string paramName = "",
+        [NotNull, CallerArgumentExpression(nameof(values))] string paramName = "",
         string message = "Parameter cannot be empty.")
     {
         _ = Guard.Against.Null(values, paramName);
@@ -45,7 +45,7 @@ public static partial class GuardClausesExtensions
 
     public static string NullOrWhiteSpace([NotNull] this IGuardClause guardClause,
         string input,
-        [NotNull][CallerArgumentExpression("input")] string paramName = "",
+        [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string message = "Parameter cannot be white spaces.")
     {
         _ = Guard.Against.NullOrEmpty(input, paramName);

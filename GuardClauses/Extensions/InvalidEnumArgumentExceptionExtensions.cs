@@ -9,13 +9,13 @@ public static class InvalidEnumArgumentExceptionExtensions
 {
     public static T EnumOutOfRange<T>([NotNull] this IGuardClause guardClause,
             T input,
-            [NotNull][CallerArgumentExpression("input")] string parameterName = "Undefined",
+            [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
             string? message = null) where T : struct, Enum
     {
         if (!Enum.IsDefined(typeof(T), input))
         {
             throw message is null
-                ? new InvalidEnumArgumentException(parameterName, Convert.ToInt32(input), typeof(T))
+                ? new InvalidEnumArgumentException(paramName, Convert.ToInt32(input), typeof(T))
                 : new InvalidEnumArgumentException(message);
         }
 

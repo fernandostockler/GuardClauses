@@ -12,7 +12,7 @@ public static partial class GuardClausesExtensions
         T input,
         T minimunValue,
         T maximunValue,
-        [NotNull][CallerArgumentExpression("input")] string paramName = "Undefined",
+        [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null) where T : IComparable, IComparable<T>
     {
         if (minimunValue.CompareTo(maximunValue) > 0)
@@ -31,7 +31,7 @@ public static partial class GuardClausesExtensions
         IEnumerable<T> values,
         T minimunValue,
         T maximunValue,
-        [NotNull][CallerArgumentExpression("values")] string paramName = "Undefined",
+        [NotNull, CallerArgumentExpression(nameof(values))] string paramName = "",
         string? message = null) where T : IComparable, IComparable<T>
     {
         if (minimunValue.CompareTo(maximunValue) > 0)
