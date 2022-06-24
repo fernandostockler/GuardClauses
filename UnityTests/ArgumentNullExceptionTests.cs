@@ -26,7 +26,7 @@ public class ArgumentNullExceptionTests
     public void NullMessageTest()
     {
         string? stringNull = null;
-        string expected = "Parameter can't be null. (Parameter 'stringNull')";
+        string expected = "Parameter cannot be null. (Parameter 'stringNull')";
         try
         {
             _ = Guard.Against.Null(stringNull, "stringNull");

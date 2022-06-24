@@ -2,37 +2,60 @@
 
 public class ArgumentExceptionTests
 {
-    [Test]
-    public void Int32ZeroTestWithZero()
-    => _ = Assert.Throws<ArgumentException>(() => Guard.Against.Zero(0));
+    [TestCase(0.0f)]
+    [TestCase(0.0d)]
+    [TestCase(0)]
+    [TestCase(0.00)]
+    public void ZeroTestWithZero<T>(T value) where T : struct
+    {
+        _ = Assert.Throws<ArgumentException>(() => Guard.Against.Zero(value));
+    }
 
-    [Test]
-    public void Int32ZeroTestWithNonZero()
-    => Assert.DoesNotThrow(() => Guard.Against.Zero(2));
+    [TestCase(0.23f)]
+    [TestCase(10.40d)]
+    [TestCase(2)]
+    [TestCase(0.10)]
+    public void ZeroTestWithNonZero<T>(T value) where T : struct
+    {
+        Assert.DoesNotThrow(() => Guard.Against.Zero(value));
+    }
 
-    [Test]
-    public void DoubleNegativeTestWithNegative()
-    => _ = Assert.Throws<ArgumentException>(() => Guard.Against.Negative(-99.0));
+    [TestCase(-10.30f)]
+    [TestCase(-0.50d)]
+    [TestCase(-20)]
+    [TestCase(-50.33)]
+    public void NegativeTestWithNegativeValues<T>(T value) where T : struct, IComparable
+    {
+        _ = Assert.Throws<ArgumentException>(() => Guard.Against.Negative(value));
+    }
 
-    [Test]
-    public void DoubleNegativeTestWithPositive()
-    => Assert.DoesNotThrow(() => Guard.Against.Negative(5.0));
+    [TestCase(10.30f)]
+    [TestCase(0.50d)]
+    [TestCase(20)]
+    [TestCase(0)]
+    public void NegativeTestWithNonNegativeValues<T>(T value) where T : struct, IComparable
+    {
+        Assert.DoesNotThrow(() => Guard.Against.Negative(value));
+    }
 
-    [Test]
-    public void DoubleNegativeTestWithZero()
-    => Assert.DoesNotThrow(() => Guard.Against.Negative(0.0));
+    [TestCase(-10.30f)]
+    [TestCase(-0.50d)]
+    [TestCase(0.0f)]
+    [TestCase(-20)]
+    [TestCase(0)]
+    [TestCase(-50.33)]
+    public void NegativeOrZeroTestWithNegativeValues<T>(T value) where T : struct, IComparable
+    {
+        _ = Assert.Throws<ArgumentException>(() => Guard.Against.NegativeOrZero(value));
+    }
 
-    [Test]
-    public void DecimalNegativeOrZeroTestWithNegative()
-    => _ = Assert.Throws<ArgumentException>(() => Guard.Against.NegativeOrZero(-42.0m));
-
-    [Test]
-    public void DecimalNegativeOrZeroTestWithZero()
-    => _ = Assert.Throws<ArgumentException>(() => Guard.Against.NegativeOrZero(0.0m));
-
-    [Test]
-    public void DecimalNegativeOrZeroTestWithPositive()
-    => Assert.DoesNotThrow(() => Guard.Against.NegativeOrZero(8.0m));
+    [TestCase(10.30f)]
+    [TestCase(0.50d)]
+    [TestCase(20)]
+    public void NegativeOrZeroTestWithNonNegativeValues<T>(T value) where T : struct, IComparable
+    {
+        Assert.DoesNotThrow(() => Guard.Against.NegativeOrZero(value));
+    }
 
     [TestCase("teste")]
     [TestCase("teste.")]

@@ -6,28 +6,18 @@ using System.Diagnostics.CodeAnalysis;
 
 public static partial class GuardClausesExtensions
 {
-    /// <summary>
-    /// Throws a ArgumentNullException ir the input is null.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="guardClause"></param>
-    /// <param name="input"></param>
-    /// <param name="paramName"></param>
-    /// <param name="message"></param>
-    /// <returns>The input.</returns>
-    /// <exception cref="ArgumentNullException"></exception>
     public static T Null<T>([NotNull] this IGuardClause guardClause,
         T input,
-        [NotNull][CallerArgumentExpression("input")] string paramName = "Undefined",
-        string message = "Parameter can't be null.")
+        [NotNull][CallerArgumentExpression("input")] string paramName = "",
+        string message = "Parameter cannot be null.")
     {
         return input is null ? throw new ArgumentNullException(paramName, message) : input;
     }
 
     public static T NullOrEmpty<T>([NotNull] this IGuardClause guardClause,
         T input,
-        [NotNull][CallerArgumentExpression("input")] string paramName = "Undefined",
-        string message = "Parameter can't be empty.")
+        [NotNull][CallerArgumentExpression("input")] string paramName = "",
+        string message = "Parameter cannot be empty.")
     {
         _ = Guard.Against.Null(input, paramName);
 
@@ -45,8 +35,8 @@ public static partial class GuardClausesExtensions
 
     public static IEnumerable<T> NullOrEmpty<T>([NotNull] this IGuardClause guardClause,
         IEnumerable<T> values,
-        [NotNull][CallerArgumentExpression("values")] string paramName = "Undefined",
-        string message = "Parameter can't be empty.")
+        [NotNull][CallerArgumentExpression("values")] string paramName = "",
+        string message = "Parameter cannot be empty.")
     {
         _ = Guard.Against.Null(values, paramName);
 
@@ -55,8 +45,8 @@ public static partial class GuardClausesExtensions
 
     public static string NullOrWhiteSpace([NotNull] this IGuardClause guardClause,
         string input,
-        [NotNull][CallerArgumentExpression("input")] string paramName = "Undefined",
-        string message = "Parameter can't be white spaces.")
+        [NotNull][CallerArgumentExpression("input")] string paramName = "",
+        string message = "Parameter cannot be white spaces.")
     {
         _ = Guard.Against.NullOrEmpty(input, paramName);
 

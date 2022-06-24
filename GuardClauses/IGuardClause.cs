@@ -1,4 +1,2 @@
 ﻿namespace GuardClauses;
-public interface IGuardClause
-{
-}
+public interface IGuardClause {}
