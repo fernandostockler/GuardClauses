@@ -53,11 +53,50 @@ public class ArgumentNullExceptionTests
     }
 
     [Test]
-    public void NullOrWhiteSpaceTest()
+    public void NullOrWhiteSpaceTestWithWiteSpaces()
     {
         string test = "     ";
         _ = Assert.Throws<ArgumentException>(() =>
             _ = Guard.Against.NullOrWhiteSpace(test, "paraName"));
+    }
+
+    [Test]
+    public void NullOrWhiteSpaceTestWithIEnumerableOfStringAndWiteSpaces()
+    {
+        string test = "     ";
+        List<string>? list = new()
+        {
+            "ksldkl",
+            test,
+            "ksldkl",
+            " "
+        };
+
+        _ = Assert.Throws<ArgumentException>(() =>
+            _ = Guard.Against.NullOrWhiteSpace(list, "paraName"));
+    }
+
+    [Test]
+    public void NullOrWhiteSpaceTestWithIEnumerableOfStringAndEmptyList()
+    {
+        List<string>? list = new();
+
+        _ = Assert.Throws<ArgumentException>(() =>
+            _ = Guard.Against.NullOrWhiteSpace(list, "paraName"));
+    }
+
+    [Test]
+    public void NullOrWhiteSpaceTestWithIEnumerableOfStringAndSomeValue()
+    {
+        List<string>? list = new()
+        {
+            "ksldkl",
+            "teste",
+            "ksldkl"
+        };
+
+        Assert.DoesNotThrow(() =>
+            _ = Guard.Against.NullOrWhiteSpace(list, "paraName"));
     }
 
     [Test]

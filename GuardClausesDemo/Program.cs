@@ -7,11 +7,11 @@ Console.WriteLine("GuardClausesDemo" + Environment.NewLine);
 IEnumerable<string> nullTest = null;
 IEnumerable<int> test = new List<int>() { 1, 3, 5, 7, 9 };
 string testValue = null;
-Order? order = new(1,5,"notes");
+Order? order = new(1,5,"notes", TestEnum.One, new Test());
 try
 {
     var order1 = Guard.Against.Null(order);
-    Console.WriteLine($"Order: Id={order1.Id}, Stars={order1.Stars}, Notes={order1.Notes}");
+    Console.WriteLine($"Order: Id={order1.Id}, Stars={order1.Stars}, Notes={order1.Notes}, TestEnum={order1.MyEnum}, Test={order1.Test}");
     //Guard.Against.Null(testValue, "testValue");
     //Guard.Against.NullOrEmpty(nullTest, "testParam");
     //Guard.Against.InvalidInput<int>(42, x => x < 40);
@@ -43,16 +43,21 @@ public enum TestEnum
     Four
 }
 
+public class Test { }
 public class Order
 {
     public int Id { get; set; }
     public int Stars { get; set; }
     public string Notes { get; set; }
+    public TestEnum MyEnum { get; set; }
+    public Test Test { get; set; }
 
-    public Order(int id, int stars, string notes)
+    public Order(int id, int stars, string notes, TestEnum myEnum, Test test)
     {
         Id = Guard.Against.NegativeOrZero(id);
         Stars = Guard.Against.OutOfRange(stars, 0, 5);
-        Notes = Guard.Against.InvalidInput(notes,x => x.Length < 30);
+        Notes = Guard.Against.InvalidInput(notes, x => !string.IsNullOrWhiteSpace(x) && x.Length < 30);
+        MyEnum = Guard.Against.EnumOutOfRange(myEnum);
+        Test = Guard.Against.Null(test);
     }
 }
