@@ -68,62 +68,80 @@ public class ArgumentNullExceptionTests
 
     [Test]
     public void NullOrWhiteSpaceTestWithWiteSpaces()
-    => _ = Invoking(() => _ = Guard.Against.NullOrWhiteSpace("    ", "paramName"))
-            .Should().Throw<ArgumentException>()
-            .WithMessage("Parameter cannot be white spaces. (Parameter 'paramName')")
-            .WithParameterName("paramName");
+    {
+        _ = Invoking(() => _ = Guard.Against.NullOrWhiteSpace("    ", "paramName"))
+                .Should().Throw<ArgumentException>()
+                .WithMessage("Parameter cannot be white spaces. (Parameter 'paramName')")
+                .WithParameterName("paramName");
+    }
 
     [Test]
     public void NullOrWhiteSpaceTestWithIEnumerableOfStringAndWiteSpaces()
-    => _ = Invoking(() => _ = Guard.Against.NullOrWhiteSpace(new List<string>() { "One", "Two", "  " }, "paramName"))
-            .Should().Throw<ArgumentException>()
-            .WithMessage("Parameter cannot contain white spaces. (Parameter 'paramName')")
-            .WithParameterName("paramName");
+    {
+        _ = Invoking(() => _ = Guard.Against.NullOrWhiteSpace(new List<string>() { "One", "Two", "  " }, "paramName"))
+                .Should().Throw<ArgumentException>()
+                .WithMessage("Parameter cannot contain white spaces. (Parameter 'paramName')")
+                .WithParameterName("paramName");
+    }
 
     [Test]
     public void NullOrWhiteSpaceTestWithIEnumerableOfStringAndEmptyList()
-    => _ = Invoking(() => _ = Guard.Against.NullOrWhiteSpace(new List<string>(), "paramName"))
-            .Should().Throw<ArgumentException>()
-            .WithMessage("Parameter cannot be empty. (Parameter 'paramName')")
-            .WithParameterName("paramName");
+    {
+        _ = Invoking(() => _ = Guard.Against.NullOrWhiteSpace(new List<string>(), "paramName"))
+                .Should().Throw<ArgumentException>()
+                .WithMessage("Parameter cannot be empty. (Parameter 'paramName')")
+                .WithParameterName("paramName");
+    }
 
     [Test]
     public void NullOrWhiteSpaceTestWithIEnumerableOfStringAndSomeValue()
-    => _ = Invoking(() => _ = Guard.Against.NullOrWhiteSpace(new List<string>() { "One", "Two", "Three" }, "paramName"))
-            .Should().NotThrow();
+    {
+        _ = Invoking(() => _ = Guard.Against.NullOrWhiteSpace(new List<string>() { "One", "Two", "Three" }, "paramName"))
+                .Should().NotThrow();
+    }
 
     [Test]
     public void NullOrWhiteSpaceTestWithSomeValue()
-    => _ = Invoking(() => _ = Guard.Against.NullOrWhiteSpace("some", "paramName"))
-            .Should().NotThrow();
+    {
+        _ = Invoking(() => _ = Guard.Against.NullOrWhiteSpace("some", "paramName"))
+                .Should().NotThrow();
+    }
 
     [Test]
     public void NullOrEmptyTestWithStringEmpty()
-    => _ = Invoking(() => _ = Guard.Against.NullOrEmpty(string.Empty, "paramName"))
-            .Should().Throw<ArgumentException>()
-            .WithMessage("Parameter cannot be empty. (Parameter 'paramName')")
-            .WithParameterName("paramName");
+    {
+        _ = Invoking(() => _ = Guard.Against.NullOrEmpty(string.Empty, "paramName"))
+                .Should().Throw<ArgumentException>()
+                .WithMessage("Parameter cannot be empty. (Parameter 'paramName')")
+                .WithParameterName("paramName");
+    }
 
     [Test]
     public void NullOrEmptyTestWithGuidEmpty()
-    => _ = Invoking(() => _ = Guard.Against.NullOrEmpty(Guid.Empty, "paramName"))
-            .Should().Throw<ArgumentException>()
-            .WithMessage("Parameter cannot be empty. (Parameter 'paramName')")
-            .WithParameterName("paramName");
+    {
+        _ = Invoking(() => _ = Guard.Against.NullOrEmpty(Guid.Empty, "paramName"))
+                .Should().Throw<ArgumentException>()
+                .WithMessage("Parameter cannot be empty. (Parameter 'paramName')")
+                .WithParameterName("paramName");
+    }
 
     [Test]
     public void NullOrEmptyTestWithEmptyIEnumerableOfT()
-    => _ = Invoking(() => _ = Guard.Against.NullOrEmpty(new List<string>().AsEnumerable(), "paramName"))
-            .Should().Throw<ArgumentException>()
-            .WithMessage("Parameter cannot be empty. (Parameter 'paramName')")
-            .WithParameterName("paramName");
+    {
+        _ = Invoking(() => _ = Guard.Against.NullOrEmpty(new List<string>().AsEnumerable(), "paramName"))
+                .Should().Throw<ArgumentException>()
+                .WithMessage("Parameter cannot be empty. (Parameter 'paramName')")
+                .WithParameterName("paramName");
+    }
 
     [Test]
     public void NullOrEmptyTestWithIEmptyListOfT()
-    => _ = Invoking(() => _ = Guard.Against.NullOrEmpty(new List<string>(), "paramName"))
-            .Should().Throw<ArgumentException>()
-            .WithMessage("Parameter cannot be empty. (Parameter 'paramName')")
-            .WithParameterName("paramName");
+    {
+        _ = Invoking(() => _ = Guard.Against.NullOrEmpty(new List<string>(), "paramName"))
+                .Should().Throw<ArgumentException>()
+                .WithMessage("Parameter cannot be empty. (Parameter 'paramName')")
+                .WithParameterName("paramName");
+    }
 
     [Test]
     public void NullOrEmptyTestWithNullIEnumerableOfT()
@@ -149,13 +167,17 @@ public class ArgumentNullExceptionTests
 
     [Test]
     public void NullOrEmptyTestWithNotEmptyIEnumerableOfT()
-    => _ = Invoking(() => Guard.Against.NullOrEmpty(new List<int>() { 1 }.AsEnumerable(), "paramName"))
+    {
+        _ = Invoking(() => Guard.Against.NullOrEmpty(new List<int>() { 1 }.AsEnumerable(), "paramName"))
             .Should().NotThrow();
+    }
 
     [Test]
     public void NullOrEmptyTestWithNotEmptyListOfT()
-    => _ = Invoking(() => Guard.Against.NullOrEmpty(new List<int>() { 1 }, "paramName"))
+    {
+        _ = Invoking(() => Guard.Against.NullOrEmpty(new List<int>() { 1 }, "paramName"))
             .Should().NotThrow();
+    }
 
     [Test]
     public void NullOrEmptyTestWithDefaultInt()

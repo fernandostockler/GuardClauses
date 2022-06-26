@@ -57,7 +57,7 @@ public static partial class GuardClausesExtensions
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null)
     {
-        if (input == null) throw new ArgumentNullException(nameof(input));
+        if (input == null) throw new ArgumentNullException(paramName);
 
         return !predicate(input)
             ? throw new ArgumentException(message ?? $"Input {paramName} did not satisfy the conditions.", paramName)

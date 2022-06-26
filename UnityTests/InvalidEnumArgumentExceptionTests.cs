@@ -1,19 +1,32 @@
 ﻿namespace UnitTests;
 
+using FluentAssertions;
+using GuardClauses.Extensions;
+using static FluentAssertions.FluentActions;
+
 public class InvalidEnumArgumentExceptionTests
 {
     [Test]
     public void EnumOutOfRangeTestWithBadInput()
-    => _ = Assert.Throws<InvalidEnumArgumentException>(() =>
-        Guard.Against.EnumOutOfRange<DateTimeKind>((DateTimeKind)10));
+    {
+        _ = Invoking(() => Guard.Against.EnumOutOfRange((DateTimeKind)10, "paramName"))
+            .Should().Throw<InvalidEnumArgumentException>()
+            .WithParameterName("paramName");
+    }
 
     [Test]
     public void EnumOutOfRangeTestWithBadInputAndCustomMessage()
-    => _ = Assert.Throws<InvalidEnumArgumentException>(() =>
-        Guard.Against.EnumOutOfRange<DateTimeKind>((DateTimeKind)8, "test", "Custom message."));
+    {
+        _ = Invoking(() => Guard.Against.EnumOutOfRange((DateTimeKind)8, "paramName", "This is a custom message."))
+            .Should().Throw<InvalidEnumArgumentException>()
+            .WithMessage($"This is a custom message.")
+            .WithParameterName(null);
+    }
 
     [Test]
     public void EnumOutOfRangeTestWithGoodData()
-    => Assert.DoesNotThrow(() =>
-        Guard.Against.EnumOutOfRange<DateTimeKind>(DateTimeKind.Utc));
+    {
+        _ = Invoking(() => Guard.Against.EnumOutOfRange(DateTimeKind.Utc))
+            .Should().NotThrow();
+    }
 }

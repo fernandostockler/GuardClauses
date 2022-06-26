@@ -1,5 +1,9 @@
 ﻿namespace UnitTests;
 
+using FluentAssertions;
+using GuardClauses.Extensions;
+using static FluentAssertions.FluentActions;
+
 public class ArgumentExceptionTests
 {
     [TestCase(0.0f)]
@@ -8,7 +12,10 @@ public class ArgumentExceptionTests
     [TestCase(0.00)]
     public void ZeroTestWithZero<T>(T value) where T : struct
     {
-        _ = Assert.Throws<ArgumentException>(() => Guard.Against.Zero(value));
+        _ = Invoking(() => Guard.Against.Zero(value, "paramName"))
+            .Should().Throw<ArgumentException>()
+            .WithMessage($"Input paramName cannot be zero. (Parameter 'paramName')")
+            .WithParameterName("paramName");
     }
 
     [TestCase(0.23f)]
@@ -17,7 +24,8 @@ public class ArgumentExceptionTests
     [TestCase(0.10)]
     public void ZeroTestWithNonZero<T>(T value) where T : struct
     {
-        Assert.DoesNotThrow(() => Guard.Against.Zero(value));
+        _ = Invoking(() => Guard.Against.Zero(value, "paramName"))
+            .Should().NotThrow();
     }
 
     [TestCase(-10.30f)]
@@ -26,7 +34,10 @@ public class ArgumentExceptionTests
     [TestCase(-50.33)]
     public void NegativeTestWithNegativeValues<T>(T value) where T : struct, IComparable
     {
-        _ = Assert.Throws<ArgumentException>(() => Guard.Against.Negative(value));
+        _ = Invoking(() => Guard.Against.Negative(value, "paramName"))
+            .Should().Throw<ArgumentException>()
+            .WithMessage($"Input paramName cannot be negative. (Parameter 'paramName')")
+            .WithParameterName("paramName");
     }
 
     [TestCase(10.30f)]
@@ -35,7 +46,8 @@ public class ArgumentExceptionTests
     [TestCase(0)]
     public void NegativeTestWithNonNegativeValues<T>(T value) where T : struct, IComparable
     {
-        Assert.DoesNotThrow(() => Guard.Against.Negative(value));
+        _ = Invoking(() => Guard.Against.Negative(value, "paramName"))
+            .Should().NotThrow();
     }
 
     [TestCase(-10.30f)]
@@ -46,7 +58,10 @@ public class ArgumentExceptionTests
     [TestCase(-50.33)]
     public void NegativeOrZeroTestWithNegativeValues<T>(T value) where T : struct, IComparable
     {
-        _ = Assert.Throws<ArgumentException>(() => Guard.Against.NegativeOrZero(value));
+        _ = Invoking(() => Guard.Against.NegativeOrZero(value, "paramName"))
+            .Should().Throw<ArgumentException>()
+            .WithMessage($"Input paramName cannot be zero or negative. (Parameter 'paramName')")
+            .WithParameterName("paramName");
     }
 
     [TestCase(10.30f)]
@@ -54,7 +69,8 @@ public class ArgumentExceptionTests
     [TestCase(20)]
     public void NegativeOrZeroTestWithNonNegativeValues<T>(T value) where T : struct, IComparable
     {
-        Assert.DoesNotThrow(() => Guard.Against.NegativeOrZero(value));
+        _ = Invoking(() => Guard.Against.NegativeOrZero(value, "paramName"))
+            .Should().NotThrow();
     }
 
     [TestCase("teste")]
@@ -67,8 +83,11 @@ public class ArgumentExceptionTests
     public void RegexEmailValidationWithInvalidEmail(string value)
     {
         var pattern = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
-        _ = Assert.Throws<ArgumentException>(
-            () => Guard.Against.InvalidRegexFormat(value, pattern));
+
+        _ = Invoking(() => Guard.Against.InvalidRegexFormat(value, pattern, "paramName"))
+            .Should().Throw<ArgumentException>()
+            .WithMessage($"Input paramName was not in required format. (Parameter 'paramName')")
+            .WithParameterName("paramName");
     }
 
     [TestCase("teste@domain.com")]
@@ -79,23 +98,41 @@ public class ArgumentExceptionTests
     public void RegexEmailValidationWithValidEmail(string value)
     {
         var pattern = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
-        Assert.DoesNotThrow(
-            () => Guard.Against.InvalidRegexFormat(value, pattern));
+
+        _ = Invoking(() => Guard.Against.InvalidRegexFormat(value, pattern, "paramName"))
+            .Should().NotThrow();
     }
 
     [Test]
     public void InvalidInputTestWithNullValue()
     {
         string input = null;
-        _ = Assert.Throws<ArgumentNullException>(
-            () => Guard.Against.InvalidInput(input, x => x.StartsWith("test")));
+
+        _ = Invoking(() => Guard.Against.InvalidInput(input, x => x.StartsWith("test"), "paramName"))
+            .Should().Throw<ArgumentException>()
+            .WithMessage($"Value cannot be null. (Parameter 'paramName')")
+            .WithParameterName("paramName");
     }
 
-    [Test]
-    public void InvalidInputTestWithInvalidValue()
-    => _ = Assert.Throws<ArgumentException>(() => Guard.Against.InvalidInput(3, x => x % 2 == 0));
+    [TestCase(5)]
+    [TestCase(9)]
+    [TestCase(7)]
+    [TestCase(11)]
+    public void InvalidInputTestWithInvalidValue(int input)
+    {
+        _ = Invoking(() => Guard.Against.InvalidInput(input, x => x % 2 == 0, "paramName"))
+            .Should().Throw<ArgumentException>()
+            .WithMessage($"Input paramName did not satisfy the conditions. (Parameter 'paramName')")
+            .WithParameterName("paramName");
+    }
 
-    [Test]
-    public void InvalidInputTestWithValidValue()
-    => Assert.DoesNotThrow(() => Guard.Against.InvalidInput(4, x => x % 2 == 0));
+    [TestCase(2)]
+    [TestCase(4)]
+    [TestCase(20)]
+    [TestCase(8)]
+    public void InvalidInputTestWithValidValue(int value)
+    {
+        _ = Invoking(() => Guard.Against.InvalidInput(value, x => x % 2 == 0, "paramName"))
+            .Should().NotThrow();
+    }
 }
