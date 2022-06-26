@@ -1,157 +1,168 @@
 namespace UnitTests;
 
+using FluentAssertions;
+using static FluentAssertions.FluentActions;
+
 public class ArgumentNullExceptionTests
 {
 
-    public class TestClass { }
-    public const TestClass? testClass = null;
+    private class TestClass { public static TestClass Test = new(); }
 
     [Test]
-    public void NullTest()
+    public void NullTestWithStringNullValue()
     {
         string? stringNull = null;
 
-        _ = Assert.Throws<ArgumentNullException>(() =>
-            _ = Guard.Against.Null(stringNull, "stringNull"));
+        _ = Invoking(() => Guard.Against.Null(stringNull, "paramName"))
+            .Should().Throw<ArgumentNullException>()
+            .WithMessage("Parameter cannot be null. (Parameter 'paramName')")
+            .WithParameterName("paramName");
     }
 
-    [TestCase(testClass)]
-    public void NullTestWithCustomClass(TestClass? value)
+    [TestCase(typeof(int?))]
+    [TestCase(typeof(double?))]
+    [TestCase(typeof(decimal?))]
+    [TestCase(typeof(long?))]
+    public void NullTestWithNullValue(Type type)
     {
-        _ = Assert.Throws<ArgumentNullException>(() =>
-            Guard.Against.Null(value, "testParam"));
+        var instance = Activator.CreateInstance(type);
+
+        _ = Invoking(() => Guard.Against.Null(instance, "paramName"))
+            .Should().Throw<ArgumentNullException>()
+            .WithMessage("Parameter cannot be null. (Parameter 'paramName')")
+            .WithParameterName("paramName");
+    }
+
+    [TestCase(typeof(TestClass))]
+    [TestCase(typeof(decimal))]
+    [TestCase(typeof(int))]
+    public void NullTestWithNonNullValue(Type type)
+    {
+        var instance = Activator.CreateInstance(type);
+
+        _ = Invoking(() => Guard.Against.Null(instance, "paramName"))
+            .Should().NotThrow<ArgumentNullException>();
     }
 
     [Test]
-    public void NullMessageTest()
+    public void NullTestWithNullCustomClass()
     {
-        string? stringNull = null;
-        string expected = "Parameter cannot be null. (Parameter 'stringNull')";
-        try
-        {
-            _ = Guard.Against.Null(stringNull, "stringNull");
-        }
-        catch (Exception ex)
-        {
-            Assert.That(ex.Message, Is.EqualTo(expected));
-        }
+        TestClass? testClass = null;
+
+        _ = Invoking(() => Guard.Against.Null(testClass, "paramName"))
+            .Should().Throw<ArgumentNullException>()
+            .WithMessage("Parameter cannot be null. (Parameter 'paramName')")
+            .WithParameterName("paramName");
     }
 
     [Test]
     public void NullMessageTestWithCustomMessage()
     {
-        string? stringNull = null;
-        string expected = "Test message. (Parameter 'stringNull')";
-        try
-        {
-            _ = Guard.Against.Null(stringNull, "stringNull", "Test message.");
-        }
-        catch (Exception ex)
-        {
-            Assert.That(ex.Message, Is.EqualTo(expected));
-        }
+        TestClass? testClass = null;
+
+        _ = Invoking(() => Guard.Against.Null(testClass, "paramName", "Test message."))
+            .Should().Throw<ArgumentNullException>()
+            .WithMessage("Test message. (Parameter 'paramName')")
+            .WithParameterName("paramName");
     }
 
     [Test]
     public void NullOrWhiteSpaceTestWithWiteSpaces()
-    {
-        string test = "     ";
-        _ = Assert.Throws<ArgumentException>(() =>
-            _ = Guard.Against.NullOrWhiteSpace(test, "paraName"));
-    }
+    => _ = Invoking(() => _ = Guard.Against.NullOrWhiteSpace("    ", "paramName"))
+            .Should().Throw<ArgumentException>()
+            .WithMessage("Parameter cannot be white spaces. (Parameter 'paramName')")
+            .WithParameterName("paramName");
 
     [Test]
     public void NullOrWhiteSpaceTestWithIEnumerableOfStringAndWiteSpaces()
-    {
-        string test = "     ";
-        List<string>? list = new()
-        {
-            "ksldkl",
-            test,
-            "ksldkl",
-            " "
-        };
-
-        _ = Assert.Throws<ArgumentException>(() =>
-            _ = Guard.Against.NullOrWhiteSpace(list, "paraName"));
-    }
+    => _ = Invoking(() => _ = Guard.Against.NullOrWhiteSpace(new List<string>() { "One", "Two", "  " }, "paramName"))
+            .Should().Throw<ArgumentException>()
+            .WithMessage("Parameter cannot contain white spaces. (Parameter 'paramName')")
+            .WithParameterName("paramName");
 
     [Test]
     public void NullOrWhiteSpaceTestWithIEnumerableOfStringAndEmptyList()
-    {
-        List<string>? list = new();
-
-        _ = Assert.Throws<ArgumentException>(() =>
-            _ = Guard.Against.NullOrWhiteSpace(list, "paraName"));
-    }
+    => _ = Invoking(() => _ = Guard.Against.NullOrWhiteSpace(new List<string>(), "paramName"))
+            .Should().Throw<ArgumentException>()
+            .WithMessage("Parameter cannot be empty. (Parameter 'paramName')")
+            .WithParameterName("paramName");
 
     [Test]
     public void NullOrWhiteSpaceTestWithIEnumerableOfStringAndSomeValue()
-    {
-        List<string>? list = new()
-        {
-            "ksldkl",
-            "teste",
-            "ksldkl"
-        };
-
-        Assert.DoesNotThrow(() =>
-            _ = Guard.Against.NullOrWhiteSpace(list, "paraName"));
-    }
+    => _ = Invoking(() => _ = Guard.Against.NullOrWhiteSpace(new List<string>() { "One", "Two", "Three" }, "paramName"))
+            .Should().NotThrow();
 
     [Test]
     public void NullOrWhiteSpaceTestWithSomeValue()
-    {
-        string test = "some";
-        Assert.DoesNotThrow(() =>
-            _ = Guard.Against.NullOrWhiteSpace(test, "paraName"));
-    }
+    => _ = Invoking(() => _ = Guard.Against.NullOrWhiteSpace("some", "paramName"))
+            .Should().NotThrow();
 
     [Test]
-    public void NullOrEmptyTestWithString()
-    {
-        string test = string.Empty;
-        _ = Assert.Throws<ArgumentException>(() =>
-            _ = Guard.Against.NullOrEmpty(test, "testParam"));
-    }
+    public void NullOrEmptyTestWithStringEmpty()
+    => _ = Invoking(() => _ = Guard.Against.NullOrEmpty(string.Empty, "paramName"))
+            .Should().Throw<ArgumentException>()
+            .WithMessage("Parameter cannot be empty. (Parameter 'paramName')")
+            .WithParameterName("paramName");
 
     [Test]
-    public void NullOrEmptyTestWithGuid()
-    {
-        Guid test = Guid.Empty;
-        _ = Assert.Throws<ArgumentException>(() =>
-            _ = Guard.Against.NullOrEmpty(test, "testParam"));
-    }
+    public void NullOrEmptyTestWithGuidEmpty()
+    => _ = Invoking(() => _ = Guard.Against.NullOrEmpty(Guid.Empty, "paramName"))
+            .Should().Throw<ArgumentException>()
+            .WithMessage("Parameter cannot be empty. (Parameter 'paramName')")
+            .WithParameterName("paramName");
 
     [Test]
-    public void NullOrEmptyTestWithIEmptyEnumerableOfT()
-    {
-        IEnumerable<int> test = new List<int>();
-        _ = Assert.Throws<ArgumentException>(() =>
-            _ = Guard.Against.NullOrEmpty(test, "testParam"));
-    }
+    public void NullOrEmptyTestWithEmptyIEnumerableOfT()
+    => _ = Invoking(() => _ = Guard.Against.NullOrEmpty(new List<string>().AsEnumerable(), "paramName"))
+            .Should().Throw<ArgumentException>()
+            .WithMessage("Parameter cannot be empty. (Parameter 'paramName')")
+            .WithParameterName("paramName");
+
+    [Test]
+    public void NullOrEmptyTestWithIEmptyListOfT()
+    => _ = Invoking(() => _ = Guard.Against.NullOrEmpty(new List<string>(), "paramName"))
+            .Should().Throw<ArgumentException>()
+            .WithMessage("Parameter cannot be empty. (Parameter 'paramName')")
+            .WithParameterName("paramName");
 
     [Test]
     public void NullOrEmptyTestWithNullIEnumerableOfT()
     {
-        IEnumerable<int> test = null;
-        _ = Assert.Throws<ArgumentNullException>(() =>
-            _ = Guard.Against.NullOrEmpty(test, "testParam"));
+        IEnumerable<int>? test = null;
+
+        _ = Invoking(() => Guard.Against.NullOrEmpty(test, "paramName"))
+            .Should().Throw<ArgumentNullException>()
+            .WithMessage("Parameter cannot be null. (Parameter 'paramName')")
+            .WithParameterName("paramName");
+    }
+
+    [Test]
+    public void NullOrEmptyTestWithNullListOfT()
+    {
+        List<int>? test = null;
+
+        _ = Invoking(() => Guard.Against.NullOrEmpty(test, "paramName"))
+            .Should().Throw<ArgumentNullException>()
+            .WithMessage("Parameter cannot be null. (Parameter 'paramName')")
+            .WithParameterName("paramName");
     }
 
     [Test]
     public void NullOrEmptyTestWithNotEmptyIEnumerableOfT()
-    {
-        IEnumerable<int> test = new List<int>() { 1 };
-        Assert.DoesNotThrow(() =>
-            _ = Guard.Against.NullOrEmpty(test, "testParam"));
-    }
+    => _ = Invoking(() => Guard.Against.NullOrEmpty(new List<int>() { 1 }.AsEnumerable(), "paramName"))
+            .Should().NotThrow();
 
     [Test]
-    public void NullOrEmptyTestWithInt()
+    public void NullOrEmptyTestWithNotEmptyListOfT()
+    => _ = Invoking(() => Guard.Against.NullOrEmpty(new List<int>() { 1 }, "paramName"))
+            .Should().NotThrow();
+
+    [Test]
+    public void NullOrEmptyTestWithDefaultInt()
     {
         int test = default;
-        Assert.DoesNotThrow(() =>
-            _ = Guard.Against.NullOrEmpty(test, "testParam"));
+
+        _ = Invoking(() => Guard.Against.NullOrEmpty(test, "paramName"))
+            .Should().NotThrow();
     }
 }
