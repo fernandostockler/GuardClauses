@@ -9,7 +9,8 @@ public class ArgumentOutOfRangeExceptionTests
         where T : IComparable, IComparable<T>
     {
         _ = Invoking(() => Guard.Against.OutOfRange(value, min, max, "minimunValue"))
-                .Should().Throw<ArgumentException>()
+                .Should()
+                .Throw<ArgumentException>()
                 .WithMessage($"Minimun value ({min}) must be below or equal maximun value ({max}). (Parameter 'minimunValue')")
                 .WithParameterName("minimunValue");
     }
@@ -21,7 +22,8 @@ public class ArgumentOutOfRangeExceptionTests
         where T : IComparable, IComparable<T>
     {
         _ = Invoking(() => Guard.Against.OutOfRange(value, min, max, "input"))
-                .Should().Throw<ArgumentOutOfRangeException>()
+                .Should()
+                .Throw<ArgumentOutOfRangeException>()
                 .WithMessage($"Input ({value}) was out of range. Minimun: {min}, Maximun: {max}. (Parameter 'input'){Environment.NewLine}Actual value was {value}.")
                 .WithParameterName("input");
     }
@@ -33,7 +35,8 @@ public class ArgumentOutOfRangeExceptionTests
         where T : IComparable, IComparable<T>
     {
         _ = Invoking(() => Guard.Against.OutOfRange(value, min, max, "input"))
-                .Should().NotThrow();
+                .Should()
+                .NotThrow();
     }
 
     [TestCase(1, 2, 6, 0, 5, 6)]
@@ -48,7 +51,8 @@ public class ArgumentOutOfRangeExceptionTests
         List<T> list = new() { Item0, Item1, Item2 };
 
         _ = Invoking(() => Guard.Against.OutOfRange(list, min, max, "values"))
-            .Should().Throw<ArgumentOutOfRangeException>()
+            .Should()
+            .Throw<ArgumentOutOfRangeException>()
             .WithMessage($"Input ({actual}) was out of range. Minimun: {min}, Maximun: {max} (Parameter 'values'){Environment.NewLine}Actual value was {actual}.")
             .WithParameterName("values");
     }
@@ -65,7 +69,8 @@ public class ArgumentOutOfRangeExceptionTests
         var list = new List<T>() { Item0, Item1, Item2 };
 
         _ = Invoking(() => Guard.Against.OutOfRange(list, min, max, "values"))
-            .Should().NotThrow();
+            .Should()
+            .NotThrow();
     }
 
     [TestCase(1, 2, 3, 4, 3)]
@@ -74,7 +79,8 @@ public class ArgumentOutOfRangeExceptionTests
         where T : IComparable, IComparable<T>
     {
         _ = Invoking(() => Guard.Against.OutOfRange(values: new List<T>() { Item0, Item1, Item2 }, minimunValue: min, maximunValue: max, paramName: "values"))
-            .Should().Throw<ArgumentException>()
+            .Should()
+            .Throw<ArgumentException>()
             .WithMessage($"Minimun value ({min}) must be below or equal maximun value ({max}). (Parameter 'values')")
             .WithParameterName("values");
     }

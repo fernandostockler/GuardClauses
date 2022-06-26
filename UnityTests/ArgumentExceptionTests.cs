@@ -9,7 +9,8 @@ public class ArgumentExceptionTests
     public void ZeroTestWithZero<T>(T value) where T : struct
     {
         _ = Invoking(() => Guard.Against.Zero(value, "paramName"))
-            .Should().Throw<ArgumentException>()
+            .Should()
+            .Throw<ArgumentException>()
             .WithMessage($"Input paramName cannot be zero. (Parameter 'paramName')")
             .WithParameterName("paramName");
     }
@@ -21,7 +22,8 @@ public class ArgumentExceptionTests
     public void ZeroTestWithNonZero<T>(T value) where T : struct
     {
         _ = Invoking(() => Guard.Against.Zero(value, "paramName"))
-            .Should().NotThrow();
+            .Should()
+            .NotThrow();
     }
 
     [TestCase(-10.30f)]
@@ -31,7 +33,8 @@ public class ArgumentExceptionTests
     public void NegativeTestWithNegativeValues<T>(T value) where T : struct, IComparable
     {
         _ = Invoking(() => Guard.Against.Negative(value, "paramName"))
-            .Should().Throw<ArgumentException>()
+            .Should()
+            .Throw<ArgumentException>()
             .WithMessage($"Input paramName cannot be negative. (Parameter 'paramName')")
             .WithParameterName("paramName");
     }
@@ -43,7 +46,8 @@ public class ArgumentExceptionTests
     public void NegativeTestWithNonNegativeValues<T>(T value) where T : struct, IComparable
     {
         _ = Invoking(() => Guard.Against.Negative(value, "paramName"))
-            .Should().NotThrow();
+            .Should()
+            .NotThrow();
     }
 
     [TestCase(-10.30f)]
@@ -55,7 +59,8 @@ public class ArgumentExceptionTests
     public void NegativeOrZeroTestWithNegativeValues<T>(T value) where T : struct, IComparable
     {
         _ = Invoking(() => Guard.Against.NegativeOrZero(value, "paramName"))
-            .Should().Throw<ArgumentException>()
+            .Should()
+            .Throw<ArgumentException>()
             .WithMessage($"Input paramName cannot be zero or negative. (Parameter 'paramName')")
             .WithParameterName("paramName");
     }
@@ -66,7 +71,8 @@ public class ArgumentExceptionTests
     public void NegativeOrZeroTestWithNonNegativeValues<T>(T value) where T : struct, IComparable
     {
         _ = Invoking(() => Guard.Against.NegativeOrZero(value, "paramName"))
-            .Should().NotThrow();
+            .Should()
+            .NotThrow();
     }
 
     [TestCase("teste")]
@@ -81,7 +87,8 @@ public class ArgumentExceptionTests
         var pattern = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
 
         _ = Invoking(() => Guard.Against.InvalidRegexFormat(value, pattern, "paramName"))
-            .Should().Throw<ArgumentException>()
+            .Should()
+            .Throw<ArgumentException>()
             .WithMessage($"Input paramName was not in required format. (Parameter 'paramName')")
             .WithParameterName("paramName");
     }
@@ -96,7 +103,8 @@ public class ArgumentExceptionTests
         var pattern = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
 
         _ = Invoking(() => Guard.Against.InvalidRegexFormat(value, pattern, "paramName"))
-            .Should().NotThrow();
+            .Should()
+            .NotThrow();
     }
 
     [Test]
@@ -105,7 +113,8 @@ public class ArgumentExceptionTests
         string input = null;
 
         _ = Invoking(() => Guard.Against.InvalidInput(input, x => x.StartsWith("test"), "paramName"))
-            .Should().Throw<ArgumentException>()
+            .Should()
+            .Throw<ArgumentException>()
             .WithMessage($"Value cannot be null. (Parameter 'paramName')")
             .WithParameterName("paramName");
     }
@@ -117,7 +126,8 @@ public class ArgumentExceptionTests
     public void InvalidInputTestWithInvalidValue(int input)
     {
         _ = Invoking(() => Guard.Against.InvalidInput(input, x => x % 2 == 0, "paramName"))
-            .Should().Throw<ArgumentException>()
+            .Should()
+            .Throw<ArgumentException>()
             .WithMessage($"Input paramName did not satisfy the conditions. (Parameter 'paramName')")
             .WithParameterName("paramName");
     }
@@ -129,6 +139,7 @@ public class ArgumentExceptionTests
     public void InvalidInputTestWithValidValue(int value)
     {
         _ = Invoking(() => Guard.Against.InvalidInput(value, x => x % 2 == 0, "paramName"))
-            .Should().NotThrow();
+            .Should()
+            .NotThrow();
     }
 }

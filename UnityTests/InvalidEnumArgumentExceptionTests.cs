@@ -6,7 +6,8 @@ public class InvalidEnumArgumentExceptionTests
     public void EnumOutOfRangeTestWithBadInput()
     {
         _ = Invoking(() => Guard.Against.EnumOutOfRange((DateTimeKind)10, "paramName"))
-            .Should().Throw<InvalidEnumArgumentException>()
+            .Should()
+            .Throw<InvalidEnumArgumentException>()
             .WithParameterName("paramName");
     }
 
@@ -14,7 +15,8 @@ public class InvalidEnumArgumentExceptionTests
     public void EnumOutOfRangeTestWithBadInputAndCustomMessage()
     {
         _ = Invoking(() => Guard.Against.EnumOutOfRange((DateTimeKind)8, "paramName", "This is a custom message."))
-            .Should().Throw<InvalidEnumArgumentException>()
+            .Should()
+            .Throw<InvalidEnumArgumentException>()
             .WithMessage($"This is a custom message.")
             .WithParameterName(null);
     }
@@ -23,6 +25,7 @@ public class InvalidEnumArgumentExceptionTests
     public void EnumOutOfRangeTestWithGoodData()
     {
         _ = Invoking(() => Guard.Against.EnumOutOfRange(DateTimeKind.Utc))
-            .Should().NotThrow();
+            .Should()
+            .NotThrow();
     }
 }
