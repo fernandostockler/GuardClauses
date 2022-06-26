@@ -1,9 +1,5 @@
 ﻿namespace UnitTests;
 
-using FluentAssertions;
-using GuardClauses.Extensions;
-using static FluentAssertions.FluentActions;
-
 public class ArgumentExceptionTests
 {
     [TestCase(0.0f)]
