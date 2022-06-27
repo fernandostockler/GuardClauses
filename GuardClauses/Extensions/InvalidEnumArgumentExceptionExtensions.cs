@@ -1,9 +1,6 @@
 ﻿namespace GuardClauses.Extensions;
 
-/// <summary>
-/// Some guard clauses.
-/// </summary>
-public static class InvalidEnumArgumentExceptionExtensions
+public static partial class GuardClausesExtensions
 {
     /// <summary>
     /// Guard against a not defined enum.<para/>
