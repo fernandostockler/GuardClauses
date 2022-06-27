@@ -5,14 +5,15 @@ using System.Text.RegularExpressions;
 public static partial class GuardClausesExtensions
 {
     /// <summary>
-    /// Guard against zero value.
+    /// Guard against zero value.<para/>
+    /// Throw an <see cref="ArgumentException" /> if the <paramref name="input"/> is not zero.
     /// </summary>
     /// <typeparam name="T">The input type.</typeparam>
     /// <param name="guardClause">A IGuardClause.</param>
     /// <param name="input">The value to be validate.</param>
     /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
     /// <param name="message">Optional: A custom message.</param>
-    /// <returns>The input value.</returns>
+    /// <returns>The <paramref name="input"/> value.</returns>
     /// <exception cref="ArgumentException"></exception>
     public static T Zero<T>([NotNull] this IGuardClause guardClause,
         T input,
@@ -25,14 +26,15 @@ public static partial class GuardClausesExtensions
     }
 
     /// <summary>
-    /// Guard against negative value.
+    /// Guard against negative value.<para/>
+    /// Throw an <see cref="ArgumentException" /> if the <paramref name="input"/> is negative.
     /// </summary>
     /// <typeparam name="T">The input type.</typeparam>
     /// <param name="guardClause">A IGuardClause.</param>
     /// <param name="input">The value to be validate.</param>
     /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
     /// <param name="message">Optional: A custom message.</param>
-    /// <returns>The input value.</returns>
+    /// <returns>The <paramref name="input"/> value.</returns>
     /// <exception cref="ArgumentException"></exception>
     public static T Negative<T>([NotNull] this IGuardClause guardClause,
         T input,
@@ -45,14 +47,15 @@ public static partial class GuardClausesExtensions
     }
 
     /// <summary>
-    /// Guard against zero or negative value.
+    /// Guard against zero or negative value.<para/>
+    /// Throw an <see cref="ArgumentException" /> if the <paramref name="input"/> is negative or zero.
     /// </summary>
     /// <typeparam name="T">The input type.</typeparam>
     /// <param name="guardClause">A IGuardClause.</param>
     /// <param name="input">The value to be validate.</param>
     /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
     /// <param name="message">Optional: A custom message.</param>
-    /// <returns>The input value.</returns>
+    /// <returns>The <paramref name="input"/> value.</returns>
     /// <exception cref="ArgumentException"></exception>
     public static T NegativeOrZero<T>([NotNull] this IGuardClause guardClause,
         T input,
@@ -65,14 +68,16 @@ public static partial class GuardClausesExtensions
     }
 
     /// <summary>
-    /// Guard against a input that does not match with a Regex pattern.
+    /// Guard against a input that does not match with a Regex <paramref name="pattern"/>.<para/>
+    /// Throw an <see cref="ArgumentException" /> if the <paramref name="input"/> does not match.
     /// </summary>
     /// <typeparam name="T">The input type.</typeparam>
     /// <param name="guardClause">A IGuardClause.</param>
     /// <param name="input">The value to be validate.</param>
+    /// <param name="pattern">A Regex pattern.</param>
     /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
     /// <param name="message">Optional: A custom message.</param>
-    /// <returns>The input value.</returns>
+    /// <returns>The <paramref name="input"/> value.</returns>
     /// <exception cref="ArgumentException"></exception>
     public static string InvalidRegexFormat([NotNull] this IGuardClause guardClause,
         [NotNull] string input,
@@ -88,7 +93,8 @@ public static partial class GuardClausesExtensions
     }
 
     /// <summary>
-    /// Guard against a input that does not pass a predicate function.
+    /// Guard against a input that does not pass a <paramref name="predicate"/> function.<para/>
+    /// Throw an <see cref="ArgumentException" /> if the <paramref name="input"/> fail with the <paramref name="predicate"/>.
     /// </summary>
     /// <typeparam name="T">The input type.</typeparam>
     /// <param name="guardClause">A IGuardClause.</param>
@@ -96,7 +102,7 @@ public static partial class GuardClausesExtensions
     /// <param name="predicate">A function to find if a input is valid or not.</param>
     /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
     /// <param name="message">Optional: A custom message.</param>
-    /// <returns>The input value.</returns>
+    /// <returns>The <paramref name="input"/> value.</returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="ArgumentException"></exception>
     public static T InvalidInput<T>([NotNull] this IGuardClause guardClause,

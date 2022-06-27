@@ -3,7 +3,9 @@
 public static partial class GuardClausesExtensions
 {
     /// <summary>
-    /// Throw a ArgumentOutOfRangeException if the input is not in a valid range of values.
+    /// Guard against a out of range argument.<para/>
+    /// Throws an <see cref="ArgumentException" /> if <paramref name="minimunValue"/> value is grater than <paramref name="maximunValue"/> value.<para/>
+    /// Throw an <see cref="ArgumentException" /> if the <paramref name="input"/> is not in a valid range of values.
     /// </summary>
     /// <typeparam name="T">The input type.</typeparam>
     /// <param name="guardClause">A IGuardClause.</param>
@@ -12,8 +14,8 @@ public static partial class GuardClausesExtensions
     /// <param name="maximunValue">The maximun value alowed.</param>
     /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
     /// <param name="message">Optional: A custom message.</param>
-    /// <returns>The input value.</returns>
-    /// <exception cref="ArgumentException">If the minimun value is grater than maximun value.</exception>
+    /// <returns>The <paramref name="input"/> value.</returns>
+    /// <exception cref="ArgumentException"></exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static T OutOfRange<T>([NotNull] this IGuardClause guardClause,
         T input,
@@ -35,16 +37,19 @@ public static partial class GuardClausesExtensions
     }
 
     /// <summary>
-    /// Throw a ArgumentOutOfRangeException if any element in the input is not in a valid range of values.
+    /// Guard against an out of range value.<para/>
+    /// Throw a <see cref="ArgumentOutOfRangeException" /> if any element in the <paramref name="values"/> is not in a valid range of values.<para/>
+    /// Throws an <see cref="ArgumentException" /> if <paramref name="minimunValue"/> contains any element with a value grater than <paramref name="maximunValue"/> value.<para/>
+    /// Throw an <see cref="ArgumentException" /> if the <paramref name="values"/> contains any element that is not in a valid range of values.
     /// </summary>
     /// <typeparam name="T">The input type.</typeparam>
     /// <param name="guardClause">A IGuardClause.</param>
-    /// <param name="input">The value to be validate.</param>
+    /// <param name="values">The value to be validate.</param>
     /// <param name="minimunValue">The mininum value in the range of values.</param>
     /// <param name="maximunValue">The maximun value alowed.</param>
     /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
     /// <param name="message">Optional: A custom message.</param>
-    /// <returns>The input value.</returns>
+    /// <returns>The <paramref name="values"/> value.</returns>
     /// <exception cref="ArgumentException">If the minimun value is grater than maximun value.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static IEnumerable<T> OutOfRange<T>([NotNull] this IGuardClause guardClause,

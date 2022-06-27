@@ -1,16 +1,20 @@
 ﻿namespace GuardClauses.Extensions;
 
+/// <summary>
+/// Some Guard clauses
+/// </summary>
 public static partial class GuardClausesExtensions
 {
     /// <summary>
-    /// Guard against null value.
+    /// Guard against null value.<para/>
+    /// Throws an <see cref="ArgumentNullException" /> if <paramref name="input" /> is null.
     /// </summary>
     /// <typeparam name="T">The input type.</typeparam>
-    /// <param name="guardClause">A IGuardClause.</param>
+    /// <param name="guardClause">A <see cref="IGuardClause"/>.</param>
     /// <param name="input">The value to be validate.</param>
     /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
     /// <param name="message">Optional: A custom message.</param>
-    /// <returns>The input value.</returns>
+    /// <returns>The <paramref name="input"/>  value.</returns>
     /// <exception cref="ArgumentNullException">Thrown if input is null.</exception>
     public static T Null<T>([NotNull] this IGuardClause guardClause,
         T input,
@@ -23,14 +27,16 @@ public static partial class GuardClausesExtensions
     }
 
     /// <summary>
-    /// Guard aganist null o empty values.
+    /// Guard aganist null o empty values.<para/>
+    /// Throws an <see cref="ArgumentNullException" /> if <paramref name="input" /> is null.<para/>
+    /// Throws an <see cref="ArgumentException" /> if <paramref name="input" /> is an empty string or a empty Guid.<para/>
     /// </summary>
     /// <typeparam name="T">The input type.</typeparam>
     /// <param name="guardClause">A IGuardClause.</param>
     /// <param name="input">The value to be validate.</param>
     /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
     /// <param name="message">Optional: A custom message.</param>
-    /// <returns>The input value.</returns>
+    /// <returns>The <paramref name="input"/>  value.</returns>
     /// <exception cref="ArgumentException"></exception>
     public static T NullOrEmpty<T>([NotNull] this IGuardClause guardClause,
         T input,
@@ -52,14 +58,17 @@ public static partial class GuardClausesExtensions
     }
 
     /// <summary>
-    /// Guard against null or empty values in IEnumerable.
+    /// Guard against null or empty values in IEnumerable.<para/>
+    /// Throws an <see cref="ArgumentNullException" /> if <paramref name="values" /> is null.<para/>
+    /// Throws an <see cref="ArgumentException" /> if <paramref name="values" /> contains any empty string or a empty Guid.<para/>
+    /// Throws an <see cref="ArgumentException" /> if <paramref name="values" /> do not contains any element.
     /// </summary>
     /// <typeparam name="T">The input type.</typeparam>
     /// <param name="guardClause">A IGuardClause.</param>
-    /// <param name="input">The value to be validate.</param>
+    /// <param name="values">The value to be validate.</param>
     /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
     /// <param name="message">Optional: A custom message.</param>
-    /// <returns>The input value.</returns>
+    /// <returns>The <paramref name="values"/>  value.</returns>
     /// <exception cref="ArgumentException"></exception>
     public static IEnumerable<T> NullOrEmpty<T>([NotNull] this IGuardClause guardClause,
         [NotNull] IEnumerable<T>? values,
@@ -74,14 +83,17 @@ public static partial class GuardClausesExtensions
     }
 
     /// <summary>
-    /// Guard against null or empty values in List.
+    /// Guard against null or empty values in List.<para/>
+    /// Throws an <see cref="ArgumentNullException" /> if <paramref name="values" /> is null.<para/>
+    /// Throws an <see cref="ArgumentException" /> if <paramref name="values" /> contains any empty string or a empty Guid.<para/>
+    /// Throws an <see cref="ArgumentException" /> if <paramref name="values" /> do not contains any element.
     /// </summary>
     /// <typeparam name="T">The input type.</typeparam>
     /// <param name="guardClause">A IGuardClause.</param>
-    /// <param name="input">The value to be validate.</param>
+    /// <param name="values">The value to be validate.</param>
     /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
     /// <param name="message">Optional: A custom message.</param>
-    /// <returns>The input value.</returns>
+    /// <returns>The <paramref name="values"/>  value.</returns>
     /// <exception cref="ArgumentException"></exception>
     public static List<T> NullOrEmpty<T>([NotNull] this IGuardClause guardClause,
     [NotNull] List<T> values,
@@ -96,13 +108,16 @@ public static partial class GuardClausesExtensions
     }
 
     /// <summary>
-    /// Guard against null or white spaces in a string value.
+    /// Guard against null or white spaces in a string value.<para/>
+    /// Throws an <see cref="ArgumentNullException" /> if <paramref name="input" /> is null.<para/>
+    /// Throws an <see cref="ArgumentException" /> if <paramref name="input" /> is an empty string or a empty Guid.<para/>
+    /// Throws an <see cref="ArgumentException" /> if <paramref name="input" /> contains only white spaces.<para/>
     /// </summary>
     /// <param name="guardClause">A IGuardClause.</param>
     /// <param name="input">The value to be validate.</param>
     /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
     /// <param name="message">Optional: A custom message.</param>
-    /// <returns>The input value.</returns>
+    /// <returns>The <paramref name="input"/>  value.</returns>
     /// <exception cref="ArgumentException"></exception>
     public static string NullOrWhiteSpace([NotNull] this IGuardClause guardClause,
         string input,
@@ -117,13 +132,17 @@ public static partial class GuardClausesExtensions
     }
 
     /// <summary>
-    /// Guard against null or white spaces in a IEnumerable{string} value.
+    /// Guard against null or white spaces in a IEnumerable{string} value.<para/>
+    /// Throws an <see cref="ArgumentNullException" /> if <paramref name="values" /> is null.<para/>
+    /// Throws an <see cref="ArgumentException" /> if <paramref name="values" /> contains any element with empty string or a empty Guid.<para/>
+    /// Throws an <see cref="ArgumentException" /> if <paramref name="values" /> do not contains any element.<para/>
+    /// Throws an <see cref="ArgumentException" /> if <paramref name="values" /> contains any element with only white spaces.<para/>
     /// </summary>
     /// <param name="guardClause">A IGuardClause.</param>
-    /// <param name="input">The value to be validate.</param>
+    /// <param name="values">The value to be validate.</param>
     /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
     /// <param name="message">Optional: A custom message.</param>
-    /// <returns>The input value.</returns>
+    /// <returns>The <paramref name="values"/>  value.</returns>
     /// <exception cref="ArgumentException"></exception>
     public static IEnumerable<string> NullOrWhiteSpace([NotNull] this IGuardClause guardClause,
         IEnumerable<string> values,

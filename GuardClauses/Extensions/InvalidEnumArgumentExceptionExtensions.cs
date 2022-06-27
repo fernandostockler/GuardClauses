@@ -1,16 +1,20 @@
 ﻿namespace GuardClauses.Extensions;
 
+/// <summary>
+/// Some guard clauses.
+/// </summary>
 public static class InvalidEnumArgumentExceptionExtensions
 {
     /// <summary>
-    /// Throw a InvalidEnumArgumentException if the input is not a defined enum.
+    /// Guard against a not defined enum.<para/>
+    /// Throw a <see cref="InvalidEnumArgumentException"/> if the <paramref name="input"/> is not a defined enum.
     /// </summary>
     /// <typeparam name="T">The input type.</typeparam>
     /// <param name="guardClause">A IGuardClause.</param>
     /// <param name="input">The value to be validate.</param>
     /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
     /// <param name="message">Optional: A custom message.</param>
-    /// <returns>The input value.</returns>
+    /// <returns>The <paramref name="input"/> value.</returns>
     /// <exception cref="InvalidEnumArgumentException"></exception>
     public static T EnumOutOfRange<T>([NotNull] this IGuardClause guardClause,
             T input,
