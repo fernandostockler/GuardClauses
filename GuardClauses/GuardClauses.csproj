@@ -5,10 +5,26 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	  <LangVersion>preview</LangVersion>
+	  <ApplicationIcon>GuardClauses.ico</ApplicationIcon>
+	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <Title>Guard clauses.</Title>
+	  <Company>$(Authors)</Company>
+	  <Copyright>Fernando Stockler de Lima</Copyright>
+	  <PackageIcon>extensions.png</PackageIcon>
+	  <RepositoryUrl>https://github.com/fernandostockler/GuardClauses.git</RepositoryUrl>
+	  <PackageTags>GuardClause;</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OneOf" Version="3.0.216" />
+    <Content Include="GuardClauses.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\OneDrive\Desktop\extensions.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

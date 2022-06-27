@@ -1,13 +1,20 @@
 ﻿namespace GuardClauses.Extensions;
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Runtime.CompilerServices;
-
 public static partial class GuardClausesExtensions
 {
+    /// <summary>
+    /// Throw a ArgumentOutOfRangeException if the input is not in a valid range of values.
+    /// </summary>
+    /// <typeparam name="T">The input type.</typeparam>
+    /// <param name="guardClause">A IGuardClause.</param>
+    /// <param name="input">The value to be validate.</param>
+    /// <param name="minimunValue">The mininum value in the range of values.</param>
+    /// <param name="maximunValue">The maximun value alowed.</param>
+    /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
+    /// <param name="message">Optional: A custom message.</param>
+    /// <returns>The input value.</returns>
+    /// <exception cref="ArgumentException">If the minimun value is grater than maximun value.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static T OutOfRange<T>([NotNull] this IGuardClause guardClause,
         T input,
         T minimunValue,
@@ -27,6 +34,19 @@ public static partial class GuardClausesExtensions
         return input;
     }
 
+    /// <summary>
+    /// Throw a ArgumentOutOfRangeException if any element in the input is not in a valid range of values.
+    /// </summary>
+    /// <typeparam name="T">The input type.</typeparam>
+    /// <param name="guardClause">A IGuardClause.</param>
+    /// <param name="input">The value to be validate.</param>
+    /// <param name="minimunValue">The mininum value in the range of values.</param>
+    /// <param name="maximunValue">The maximun value alowed.</param>
+    /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
+    /// <param name="message">Optional: A custom message.</param>
+    /// <returns>The input value.</returns>
+    /// <exception cref="ArgumentException">If the minimun value is grater than maximun value.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static IEnumerable<T> OutOfRange<T>([NotNull] this IGuardClause guardClause,
         IEnumerable<T> values,
         T minimunValue,

@@ -1,15 +1,11 @@
 ﻿namespace GuardClauses.Extensions;
 
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
-
 public static partial class GuardClausesExtensions
 {
     /// <summary>
     /// Guard against null value.
     /// </summary>
-    /// <typeparam name="T">Any type.</typeparam>
+    /// <typeparam name="T">The input type.</typeparam>
     /// <param name="guardClause">A IGuardClause.</param>
     /// <param name="input">The value to be validate.</param>
     /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
@@ -26,6 +22,16 @@ public static partial class GuardClausesExtensions
             : input;
     }
 
+    /// <summary>
+    /// Guard aganist null o empty values.
+    /// </summary>
+    /// <typeparam name="T">The input type.</typeparam>
+    /// <param name="guardClause">A IGuardClause.</param>
+    /// <param name="input">The value to be validate.</param>
+    /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
+    /// <param name="message">Optional: A custom message.</param>
+    /// <returns>The input value.</returns>
+    /// <exception cref="ArgumentException"></exception>
     public static T NullOrEmpty<T>([NotNull] this IGuardClause guardClause,
         T input,
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
@@ -45,6 +51,16 @@ public static partial class GuardClausesExtensions
         };
     }
 
+    /// <summary>
+    /// Guard against null or empty values in IEnumerable.
+    /// </summary>
+    /// <typeparam name="T">The input type.</typeparam>
+    /// <param name="guardClause">A IGuardClause.</param>
+    /// <param name="input">The value to be validate.</param>
+    /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
+    /// <param name="message">Optional: A custom message.</param>
+    /// <returns>The input value.</returns>
+    /// <exception cref="ArgumentException"></exception>
     public static IEnumerable<T> NullOrEmpty<T>([NotNull] this IGuardClause guardClause,
         [NotNull] IEnumerable<T>? values,
         [NotNull, CallerArgumentExpression(nameof(values))] string paramName = "",
@@ -57,6 +73,16 @@ public static partial class GuardClausesExtensions
             : throw new ArgumentException(message, paramName);
     }
 
+    /// <summary>
+    /// Guard against null or empty values in List.
+    /// </summary>
+    /// <typeparam name="T">The input type.</typeparam>
+    /// <param name="guardClause">A IGuardClause.</param>
+    /// <param name="input">The value to be validate.</param>
+    /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
+    /// <param name="message">Optional: A custom message.</param>
+    /// <returns>The input value.</returns>
+    /// <exception cref="ArgumentException"></exception>
     public static List<T> NullOrEmpty<T>([NotNull] this IGuardClause guardClause,
     [NotNull] List<T> values,
     [NotNull, CallerArgumentExpression(nameof(values))] string paramName = "",
@@ -69,6 +95,15 @@ public static partial class GuardClausesExtensions
             : throw new ArgumentException(message, paramName);
     }
 
+    /// <summary>
+    /// Guard against null or white spaces in a string value.
+    /// </summary>
+    /// <param name="guardClause">A IGuardClause.</param>
+    /// <param name="input">The value to be validate.</param>
+    /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
+    /// <param name="message">Optional: A custom message.</param>
+    /// <returns>The input value.</returns>
+    /// <exception cref="ArgumentException"></exception>
     public static string NullOrWhiteSpace([NotNull] this IGuardClause guardClause,
         string input,
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
@@ -81,6 +116,15 @@ public static partial class GuardClausesExtensions
             : input;
     }
 
+    /// <summary>
+    /// Guard against null or white spaces in a IEnumerable{string} value.
+    /// </summary>
+    /// <param name="guardClause">A IGuardClause.</param>
+    /// <param name="input">The value to be validate.</param>
+    /// <param name="paramName">Optional: The parameter's name. (automatically generated).</param>
+    /// <param name="message">Optional: A custom message.</param>
+    /// <returns>The input value.</returns>
+    /// <exception cref="ArgumentException"></exception>
     public static IEnumerable<string> NullOrWhiteSpace([NotNull] this IGuardClause guardClause,
         IEnumerable<string> values,
         [NotNull, CallerArgumentExpression(nameof(values))] string paramName = "",
