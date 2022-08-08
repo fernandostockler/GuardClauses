@@ -114,4 +114,4 @@ public class Address
 
 - Addressed by Nick Chapsas on YouTube: [How to write clean validation clauses in .NET](https://youtu.be/Tvx6DNarqDM).
 - Inspired by the GitHub project: [ardalis/GuardClauses](https://github.com/ardalis/GuardClauses).
-- Artigo Fail Fast from [www.martinfowler.com](https://www.martinfowler.com/ieeeSoftware/failFast.pdf).
+- Article Fail Fast from [www.martinfowler.com](https://www.martinfowler.com/ieeeSoftware/failFast.pdf).
