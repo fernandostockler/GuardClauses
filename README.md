@@ -1,6 +1,9 @@
 # Guard Clauses
 
-Designed to fail early when encountering arguments outside the correct specification.
+Designed to fail early when encountering arguments outside the correct specification. **_Fail fast_** is a technique that exposes potential bugs early in development, making them immediately visible.
+
+> The bugs I hate are the ones that show up only after hours of successful operation, under unusual circumstances, or whose stack traces lead to dead ends.
+> -Martin Fowler.
 
 ## Usage
 
