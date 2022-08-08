@@ -14,10 +14,12 @@ public static partial class GuardClausesExtensions
     /// <returns>The <paramref name="input"/> value.</returns>
     /// <exception cref="InvalidEnumArgumentException"></exception>
     public static T EnumOutOfRange<T>([NotNull] this IGuardClause guardClause,
-            T input,
+            [NotNull] T input,
             [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
             string? message = null) where T : struct, Enum
     {
+        _ = Guard.Against.Null(input, paramName);
+
         if (!Enum.IsDefined(typeof(T), input))
         {
             throw message is null

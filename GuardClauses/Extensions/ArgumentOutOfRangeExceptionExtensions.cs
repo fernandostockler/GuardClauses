@@ -18,12 +18,16 @@ public static partial class GuardClausesExtensions
     /// <exception cref="ArgumentException"></exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static T OutOfRange<T>([NotNull] this IGuardClause guardClause,
-        T input,
-        T minimunValue,
-        T maximunValue,
+        [NotNull] T input,
+        [NotNull] T minimunValue,
+        [NotNull] T maximunValue,
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null) where T : IComparable, IComparable<T>
     {
+        _ = Guard.Against.Null(input, paramName);
+        _ = Guard.Against.Null(minimunValue, nameof(minimunValue));
+        _ = Guard.Against.Null(maximunValue, nameof(maximunValue));
+
         if (minimunValue.CompareTo(maximunValue) > 0)
             throw new ArgumentException($"Minimun value ({minimunValue}) must be below or equal maximun value ({maximunValue}).", paramName);
 
@@ -53,12 +57,16 @@ public static partial class GuardClausesExtensions
     /// <exception cref="ArgumentException">If the minimun value is grater than maximun value.</exception>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static IEnumerable<T> OutOfRange<T>([NotNull] this IGuardClause guardClause,
-        IEnumerable<T> values,
-        T minimunValue,
-        T maximunValue,
+        [NotNull] IEnumerable<T> values,
+        [NotNull] T minimunValue,
+        [NotNull] T maximunValue,
         [NotNull, CallerArgumentExpression(nameof(values))] string paramName = "",
         string? message = null) where T : IComparable, IComparable<T>
     {
+        _ = Guard.Against.Null(values, paramName);
+        _ = Guard.Against.Null(minimunValue, nameof(minimunValue));
+        _ = Guard.Against.Null(maximunValue, nameof(maximunValue));
+
         if (minimunValue.CompareTo(maximunValue) > 0)
             throw new ArgumentException($"The minimum value (Min: {minimunValue}) cannot be greater than the maximum value (Max: {maximunValue}).", paramName);
 

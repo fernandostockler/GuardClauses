@@ -21,10 +21,8 @@ public static partial class GuardClausesExtensions
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null)
     {
-        message ??= $"{paramName} cannot be null.";
-
         return input is null
-            ? throw new ArgumentNullException(paramName, message)
+            ? throw new ArgumentNullException(paramName, message ?? $"{paramName} cannot be null.")
             : input;
     }
 
