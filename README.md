@@ -1,9 +1,16 @@
 # Guard Clauses
 
-Designed to fail early when encountering arguments outside the correct specification. **_Fail fast_** is a technique that exposes potential bugs early in development, making them immediately visible.
+Designed to fail early when encountering arguments outside the correct specification. 
 
 > The bugs I hate are the ones that show up only after hours of successful operation, under unusual circumstances, or whose stack traces lead to dead ends.
-> -Martin Fowler.
+> 
+> -**_Martin Fowler_**.
+
+**_Fail fast_** is a technique that exposes potential bugs early in development, making them immediately visible.
+
+> Assertions are the key to failing fast. An assertion is a tiny piece of code that checks a condition and then fails if the condition isn’t met. So, when something starts to go wrong, an assertion detects the problem and makes it visible.
+> 
+> -**_Martin Fowler_**.
 
 ## Usage
 
