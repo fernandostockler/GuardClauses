@@ -78,7 +78,6 @@ public static partial class GuardClausesExtensions
     /// Guard against a input that does not match with a Regex <paramref name="pattern"/>.<para/>
     /// Throw an <see cref="ArgumentException" /> if the <paramref name="input"/> does not match.
     /// </summary>
-    /// <typeparam name="T">The input type.</typeparam>
     /// <param name="guardClause">A IGuardClause.</param>
     /// <param name="input">The value to be validate.</param>
     /// <param name="pattern">A Regex pattern.</param>

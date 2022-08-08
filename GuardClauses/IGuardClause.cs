@@ -1,2 +1,6 @@
 ﻿namespace GuardClauses;
-public interface IGuardClause {}
+
+/// <summary>
+/// Guard clause.
+/// </summary>
+public interface IGuardClause { }

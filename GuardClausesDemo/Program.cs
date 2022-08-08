@@ -12,7 +12,7 @@ try
 {
     var order1 = Guard.Against.Null(order);
     Console.WriteLine($"Order: Id={order1.Id}, Stars={order1.Stars}, Notes={order1.Notes}, TestEnum={order1.MyEnum}, Test={order1.Test}, Birthday={order1.Birthday}");
-    //Guard.Against.Null(testValue, "testValue");
+    Guard.Against.Null(testValue, (string)null);
     //Guard.Against.NullOrEmpty(nullTest, "testParam");
     //Guard.Against.InvalidInput<int>(42, x => x < 40);
     //Guard.Against.OutOfRange(test, 3, 9, "paramTest");
