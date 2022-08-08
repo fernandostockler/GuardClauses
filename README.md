@@ -64,6 +64,52 @@ public class Person
 | `Guard.Against.NullOrWhiteSpace`    | Throw a `ArgumentNullException` if the input is null, empty or white spaces.|
 | `And`                               | Throw a `ArgumentException` if the input does not satisfy a condition.|
 
+## Custom extensions
+
+You can create your own extension methods by simply extending the `IGuardClause` interface inside the `GuardClauses.Extensions` namespace.
+
+```C#
+
+namespace GuardClauses.Extensions;
+
+public static class ZipCodeExtensions
+{
+    public static ZipCode InvalidZipCode(this IGuardClause guardClause, ZipCode zipCode)
+    {
+        return ValidateZipCode(zipCode)
+            ? zipCode
+            : throw new ArgumentException($"ZipCode ({zipCode}) is invalid.", nameof(zipCode));
+    }
+}
+
+```
+
+Usage:
+
+```C#
+
+public class Address
+{
+    string Line1;
+    string Line2;
+    string City;
+    string State;
+    string ZipCode;
+    
+    public Address(string line1, string line2, string city, string state, ZipCode zipCode)
+    {
+        Line1 = line1;
+        Line2 = line2;
+        City = city;
+        State = state;
+        ZipCode = Guard.Against.InvalidZipCode(zipCode);
+    }
+    
+    ...
+}
+
+```
+
 ## References
 
 - Addressed by Nick Chapsas on YouTube: [How to write clean validation clauses in .NET](https://youtu.be/Tvx6DNarqDM).
