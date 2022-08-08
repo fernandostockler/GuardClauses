@@ -1,6 +1,16 @@
 # Guard Clauses
 
-Designed to fail early when encountering arguments outside the correct specification.
+Designed to fail early when encountering arguments outside the correct specification. 
+
+> The bugs I hate are the ones that show up only after hours of successful operation, under unusual circumstances, or whose stack traces lead to dead ends.
+> 
+> -**_Martin Fowler_**.
+
+**_Fail fast_** is a technique that exposes potential bugs early in development, making them immediately visible.
+
+> Assertions are the key to failing fast. An assertion is a tiny piece of code that checks a condition and then fails if the condition isn’t met. So, when something starts to go wrong, an assertion detects the problem and makes it visible.
+> 
+> -**_Martin Fowler_**.
 
 ## Usage
 
@@ -52,3 +62,56 @@ public class Person
 | `Guard.Against.Null`                | Throw a `ArgumentNullException` if the input is null.|
 | `Guard.Against.NullOrEmpty`         | Throw a `ArgumentNullException` if the input is null or empty.|
 | `Guard.Against.NullOrWhiteSpace`    | Throw a `ArgumentNullException` if the input is null, empty or white spaces.|
+| `And`                               | Throw a `ArgumentException` if the input does not satisfy a condition.|
+
+## Custom extensions
+
+You can create your own extension methods by simply extending the `IGuardClause` interface inside the `GuardClauses.Extensions` namespace.
+
+```C#
+
+namespace GuardClauses.Extensions;
+
+public static class ZipCodeExtensions
+{
+    public static ZipCode InvalidZipCode(this IGuardClause guardClause, ZipCode zipCode)
+    {
+        return ValidateZipCode(zipCode)
+            ? zipCode
+            : throw new ArgumentException($"ZipCode ({zipCode}) is invalid.", nameof(zipCode));
+    }
+}
+
+```
+
+Usage:
+
+```C#
+
+public class Address
+{
+    string Line1;
+    string Line2;
+    string City;
+    string State;
+    string ZipCode;
+    
+    public Address(string line1, string line2, string city, string state, ZipCode zipCode)
+    {
+        Line1 = line1;
+        Line2 = line2;
+        City = city;
+        State = state;
+        ZipCode = Guard.Against.InvalidZipCode(zipCode);
+    }
+    
+    ...
+}
+
+```
+
+## References
+
+- Addressed by Nick Chapsas on YouTube: [How to write clean validation clauses in .NET](https://youtu.be/Tvx6DNarqDM).
+- Inspired by the GitHub project: [ardalis/GuardClauses](https://github.com/ardalis/GuardClauses).
+- Artigo Fail Fast from [www.martinfowler.com](https://www.martinfowler.com/ieeeSoftware/failFast.pdf).
