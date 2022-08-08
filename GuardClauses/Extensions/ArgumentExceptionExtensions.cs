@@ -20,13 +20,10 @@ public static partial class GuardClausesExtensions
         [NotNull] T input,
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null) where T : struct
-    {
-        _ = Guard.Against.Null(input, paramName);
 
-        return EqualityComparer<T>.Default.Equals(input, default)
+        => EqualityComparer<T>.Default.Equals(Guard.Against.Null(input, paramName), default)
             ? throw new ArgumentException(message ?? $"Input {paramName} cannot be zero.", paramName)
             : input;
-    }
 
     /// <summary>
     /// Guard against negative value.<para/>
@@ -43,13 +40,10 @@ public static partial class GuardClausesExtensions
         [NotNull] T input,
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null) where T : struct, IComparable
-    {
-        _ = Guard.Against.Null(input, paramName);
 
-        return input.CompareTo(default(T)) < 0
+        => Guard.Against.Null(input, paramName).CompareTo(default(T)) < 0
             ? throw new ArgumentException(message ?? $"Input {paramName} cannot be negative.", paramName)
             : input;
-    }
 
     /// <summary>
     /// Guard against zero or negative value.<para/>
@@ -66,13 +60,10 @@ public static partial class GuardClausesExtensions
         T input,
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null) where T : struct, IComparable
-    {
-        _ = Guard.Against.Null(input, paramName);
 
-        return input.CompareTo(default(T)) <= 0
+        => Guard.Against.Null(input, paramName).CompareTo(default(T)) <= 0
             ? throw new ArgumentException(message ?? $"Input {paramName} cannot be zero or negative.", paramName)
             : input;
-    }
 
     /// <summary>
     /// Guard against a input that does not match with a Regex <paramref name="pattern"/>.<para/>

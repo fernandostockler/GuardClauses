@@ -8,7 +8,7 @@ using System;
 public static partial class GuardClausesExtensions
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="input"></param>
@@ -31,4 +31,6 @@ public static partial class GuardClausesExtensions
             : throw new ArgumentException(
                 message ?? $"Input {paramName} did not satisfy the conditions ({condition}).", paramName);
     }
+
+    //Todo: check where else you can apply [Caller Argument Expression].
 }

@@ -11,12 +11,17 @@
 	  <Title>Guard clauses.</Title>
 	  <Company>$(Authors)</Company>
 	  <Copyright>Fernando Stockler de Lima</Copyright>
+	  <Authors>Fernando Stockler de Lima</Authors>
 	  <PackageIcon>extensions.png</PackageIcon>
 	  <RepositoryUrl>https://github.com/fernandostockler/GuardClauses.git</RepositoryUrl>
 	  <PackageTags>GuardClause;</PackageTags>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	  <IncludeSymbols>True</IncludeSymbols>
 	  <RepositoryType>git</RepositoryType>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <PackageProjectUrl>https://fernandostockler.github.io/GuardClauses/</PackageProjectUrl>
+	  <Description>A collection of extension methods for validating method arguments in order to spot bugs as quickly as possible.</Description>
+	  <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +30,10 @@
 
   <ItemGroup>
     <None Include="..\..\..\..\OneDrive\Desktop\extensions.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

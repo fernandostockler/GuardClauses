@@ -20,11 +20,10 @@ public static partial class GuardClausesExtensions
         [NotNull] T input,
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null)
-    {
-        return input is null
+
+        => input is null
             ? throw new ArgumentNullException(paramName, message ?? $"{paramName} cannot be null.")
             : input;
-    }
 
     /// <summary>
     /// Guard aganist null o empty values.<para/>
@@ -42,20 +41,19 @@ public static partial class GuardClausesExtensions
         T input,
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string message = "Parameter cannot be empty.")
-    {
-        _ = Guard.Against.Null(input, paramName);
 
-        return input switch
+        => Guard.Against.Null(input, paramName) switch
         {
-            string value when string.IsNullOrEmpty(value)
-                => throw new ArgumentException(message, paramName),
+            string value
+                when string.IsNullOrEmpty(value)
+                    => throw new ArgumentException(message, paramName),
 
-            Guid guid when guid == Guid.Empty
-                => throw new ArgumentException(message, paramName),
+            Guid guid
+                when guid == Guid.Empty
+                    => throw new ArgumentException(message, paramName),
 
             _ => input,
         };
-    }
 
     /// <summary>
     /// Guard against null or empty values in IEnumerable.<para/>
@@ -74,13 +72,10 @@ public static partial class GuardClausesExtensions
         [NotNull] IEnumerable<T> values,
         [NotNull, CallerArgumentExpression(nameof(values))] string paramName = "",
         string message = "Parameter cannot be empty.")
-    {
-        _ = Guard.Against.Null(values, paramName);
 
-        return values.Any()
+        => Guard.Against.Null(values, paramName).Any()
             ? values
             : throw new ArgumentException(message, paramName);
-    }
 
     /// <summary>
     /// Guard against null or empty values in List.<para/>
@@ -96,16 +91,13 @@ public static partial class GuardClausesExtensions
     /// <returns>The <paramref name="values"/>  value.</returns>
     /// <exception cref="ArgumentException"></exception>
     public static List<T> NullOrEmpty<T>([NotNull] this IGuardClause guardClause,
-    [NotNull] List<T> values,
-    [NotNull, CallerArgumentExpression(nameof(values))] string paramName = "",
-    string message = "Parameter cannot be empty.")
-    {
-        _ = Guard.Against.Null(values, paramName);
+        [NotNull] List<T> values,
+        [NotNull, CallerArgumentExpression(nameof(values))] string paramName = "",
+        string message = "Parameter cannot be empty.")
 
-        return values.Any()
+        => Guard.Against.Null(values, paramName).Any()
             ? values
             : throw new ArgumentException(message, paramName);
-    }
 
     /// <summary>
     /// Guard against null or white spaces in a string value.<para/>
@@ -123,13 +115,10 @@ public static partial class GuardClausesExtensions
         string input,
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string message = "Parameter cannot be white spaces.")
-    {
-        _ = Guard.Against.NullOrEmpty(input, paramName);
 
-        return string.IsNullOrWhiteSpace(input)
+        => string.IsNullOrWhiteSpace(Guard.Against.NullOrEmpty(input, paramName))
             ? throw new ArgumentException(message, paramName)
             : input;
-    }
 
     /// <summary>
     /// Guard against null or white spaces in a IEnumerable{string} value.<para/>
@@ -149,14 +138,10 @@ public static partial class GuardClausesExtensions
         [NotNull, CallerArgumentExpression(nameof(values))] string paramName = "",
         string message = "Parameter cannot contain white spaces.")
     {
-        _ = Guard.Against.NullOrEmpty(values, paramName);
-
-        foreach (var _ in values
-            .Where(value => string.IsNullOrWhiteSpace(value))
+        foreach (var _ in Guard.Against.NullOrEmpty(values, paramName)
+            .Where(string.IsNullOrWhiteSpace)
             .Select(value => new { }))
-        {
             throw new ArgumentException(message, paramName);
-        }
 
         return values;
     }
