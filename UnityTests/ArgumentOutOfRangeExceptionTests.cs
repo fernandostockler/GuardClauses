@@ -81,7 +81,7 @@ public class ArgumentOutOfRangeExceptionTests
         _ = Invoking(() => Guard.Against.OutOfRange(values: new List<T>() { Item0, Item1, Item2 }, minimunValue: min, maximunValue: max, paramName: "values"))
             .Should()
             .Throw<ArgumentException>()
-            .WithMessage($"Minimun value ({min}) must be below or equal maximun value ({max}). (Parameter 'values')")
+            .WithMessage($"The minimum value (Min: {min}) cannot be greater than the maximum value (Max: {max}). (Parameter 'values')")
             .WithParameterName("values");
     }
 }

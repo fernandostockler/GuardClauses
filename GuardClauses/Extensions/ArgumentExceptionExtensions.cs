@@ -1,5 +1,6 @@
 ﻿namespace GuardClauses.Extensions;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
 public static partial class GuardClausesExtensions
@@ -16,10 +17,12 @@ public static partial class GuardClausesExtensions
     /// <returns>The <paramref name="input"/> value.</returns>
     /// <exception cref="ArgumentException"></exception>
     public static T Zero<T>([NotNull] this IGuardClause guardClause,
-        T input,
+        [NotNull] T input,
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null) where T : struct
     {
+        _ = Guard.Against.Null(input, paramName);
+
         return EqualityComparer<T>.Default.Equals(input, default)
             ? throw new ArgumentException(message ?? $"Input {paramName} cannot be zero.", paramName)
             : input;
@@ -37,10 +40,12 @@ public static partial class GuardClausesExtensions
     /// <returns>The <paramref name="input"/> value.</returns>
     /// <exception cref="ArgumentException"></exception>
     public static T Negative<T>([NotNull] this IGuardClause guardClause,
-        T input,
+        [NotNull] T input,
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null) where T : struct, IComparable
     {
+        _ = Guard.Against.Null(input, paramName);
+
         return input.CompareTo(default(T)) < 0
             ? throw new ArgumentException(message ?? $"Input {paramName} cannot be negative.", paramName)
             : input;
@@ -62,6 +67,8 @@ public static partial class GuardClausesExtensions
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null) where T : struct, IComparable
     {
+        _ = Guard.Against.Null(input, paramName);
+
         return input.CompareTo(default(T)) <= 0
             ? throw new ArgumentException(message ?? $"Input {paramName} cannot be zero or negative.", paramName)
             : input;
@@ -85,6 +92,9 @@ public static partial class GuardClausesExtensions
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null)
     {
+        _ = Guard.Against.Null(input, paramName);
+        _ = Guard.Against.Null(pattern, paramName);
+
         var match = Regex.Match(input, pattern);
 
         return match.Success && input == match.Value
@@ -111,9 +121,10 @@ public static partial class GuardClausesExtensions
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null)
     {
-        if (input is null) throw new ArgumentNullException(paramName);
+        _ = Guard.Against.Null(input, paramName);
+        _ = Guard.Against.Null(predicate, paramName);
 
-        return !predicate(input)
+        return !predicate(Guard.Against.Null(input, paramName))
             ? throw new ArgumentException(message ?? $"Input {paramName} did not satisfy the conditions.", paramName)
             : input;
     }

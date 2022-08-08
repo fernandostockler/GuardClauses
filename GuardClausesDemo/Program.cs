@@ -7,11 +7,11 @@ Console.WriteLine("GuardClausesDemo" + Environment.NewLine);
 IEnumerable<string> nullTest = null;
 IEnumerable<int> test = new List<int>() { 1, 3, 5, 7, 9 };
 string testValue = null;
-Order? order = new(1,5,"notes", TestEnum.One, new Test());
+Order? order = new(1,5,"notes", TestEnum.One, new Test(), new DateOnly(1968,12,22));
 try
 {
     var order1 = Guard.Against.Null(order);
-    Console.WriteLine($"Order: Id={order1.Id}, Stars={order1.Stars}, Notes={order1.Notes}, TestEnum={order1.MyEnum}, Test={order1.Test}");
+    Console.WriteLine($"Order: Id={order1.Id}, Stars={order1.Stars}, Notes={order1.Notes}, TestEnum={order1.MyEnum}, Test={order1.Test}, Birthday={order1.Birthday}");
     //Guard.Against.Null(testValue, "testValue");
     //Guard.Against.NullOrEmpty(nullTest, "testParam");
     //Guard.Against.InvalidInput<int>(42, x => x < 40);
@@ -51,13 +51,18 @@ public class Order
     public string Notes { get; set; }
     public TestEnum MyEnum { get; set; }
     public Test Test { get; set; }
+    public DateOnly Birthday { get; set; }
 
-    public Order(int id, int stars, string notes, TestEnum myEnum, Test test)
+
+    public Order(int id, int stars, string notes, TestEnum myEnum, Test test, DateOnly birthday)
     {
         Id = Guard.Against.NegativeOrZero(id);
         Stars = Guard.Against.OutOfRange(stars, 0, 5);
         Notes = Guard.Against.InvalidInput(notes, x => !string.IsNullOrWhiteSpace(x) && x.Length < 30);
         MyEnum = Guard.Against.EnumOutOfRange(myEnum);
         Test = Guard.Against.Null(test);
+        Birthday = Guard.Against.OutOfRange(birthday, 
+            minimunValue: new DateOnly(1968, 11, 22),
+            maximunValue: new DateOnly(1969, 11, 22));
     }
 }

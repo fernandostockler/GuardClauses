@@ -115,7 +115,7 @@ public class ArgumentExceptionTests
         _ = Invoking(() => Guard.Against.InvalidInput(input, x => x.StartsWith("test"), "paramName"))
             .Should()
             .Throw<ArgumentException>()
-            .WithMessage($"Value cannot be null. (Parameter 'paramName')")
+            .WithMessage($"paramName cannot be null. (Parameter 'paramName')")
             .WithParameterName("paramName");
     }
 

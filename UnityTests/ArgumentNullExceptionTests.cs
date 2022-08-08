@@ -13,7 +13,7 @@ public class ArgumentNullExceptionTests
         _ = Invoking(() => Guard.Against.Null(stringNull, "paramName"))
             .Should()
             .Throw<ArgumentNullException>()
-            .WithMessage("Parameter cannot be null. (Parameter 'paramName')")
+            .WithMessage("paramName cannot be null. (Parameter 'paramName')")
             .WithParameterName("paramName");
     }
 
@@ -28,7 +28,7 @@ public class ArgumentNullExceptionTests
         _ = Invoking(() => Guard.Against.Null(instance, "paramName"))
             .Should()
             .Throw<ArgumentNullException>()
-            .WithMessage("Parameter cannot be null. (Parameter 'paramName')")
+            .WithMessage("paramName cannot be null. (Parameter 'paramName')")
             .WithParameterName("paramName");
     }
 
@@ -52,7 +52,7 @@ public class ArgumentNullExceptionTests
         _ = Invoking(() => Guard.Against.Null(testClass, "paramName"))
             .Should()
             .Throw<ArgumentNullException>()
-            .WithMessage("Parameter cannot be null. (Parameter 'paramName')")
+            .WithMessage("paramName cannot be null. (Parameter 'paramName')")
             .WithParameterName("paramName");
     }
 
@@ -162,7 +162,7 @@ public class ArgumentNullExceptionTests
         _ = Invoking(() => Guard.Against.NullOrEmpty(test, "paramName"))
             .Should()
             .Throw<ArgumentNullException>()
-            .WithMessage("Parameter cannot be null. (Parameter 'paramName')")
+            .WithMessage("paramName cannot be null. (Parameter 'paramName')")
             .WithParameterName("paramName");
     }
 
@@ -174,7 +174,7 @@ public class ArgumentNullExceptionTests
         _ = Invoking(() => Guard.Against.NullOrEmpty(test, "paramName"))
             .Should()
             .Throw<ArgumentNullException>()
-            .WithMessage("Parameter cannot be null. (Parameter 'paramName')")
+            .WithMessage("paramName cannot be null. (Parameter 'paramName')")
             .WithParameterName("paramName");
     }
 

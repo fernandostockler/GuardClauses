@@ -17,10 +17,12 @@ public static partial class GuardClausesExtensions
     /// <returns>The <paramref name="input"/>  value.</returns>
     /// <exception cref="ArgumentNullException">Thrown if input is null.</exception>
     public static T Null<T>([NotNull] this IGuardClause guardClause,
-        T input,
+        [NotNull] T input,
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
-        string message = "Parameter cannot be null.")
+        string? message = null)
     {
+        message ??= $"{paramName} cannot be null.";
+
         return input is null
             ? throw new ArgumentNullException(paramName, message)
             : input;
@@ -71,7 +73,7 @@ public static partial class GuardClausesExtensions
     /// <returns>The <paramref name="values"/>  value.</returns>
     /// <exception cref="ArgumentException"></exception>
     public static IEnumerable<T> NullOrEmpty<T>([NotNull] this IGuardClause guardClause,
-        [NotNull] IEnumerable<T>? values,
+        [NotNull] IEnumerable<T> values,
         [NotNull, CallerArgumentExpression(nameof(values))] string paramName = "",
         string message = "Parameter cannot be empty.")
     {
