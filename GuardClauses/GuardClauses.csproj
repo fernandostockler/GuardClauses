@@ -22,6 +22,8 @@
 	  <PackageProjectUrl>https://fernandostockler.github.io/GuardClauses/</PackageProjectUrl>
 	  <Description>A collection of extension methods for validating method arguments in order to spot bugs as quickly as possible.</Description>
 	  <NeutralLanguage>en-US</NeutralLanguage>
+	  <VersionPrefix>0.6.0</VersionPrefix>
+	  <VersionSuffix>rc.1</VersionSuffix>
   </PropertyGroup>
 
   <ItemGroup>
