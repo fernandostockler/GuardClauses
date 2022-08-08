@@ -120,7 +120,6 @@ public static partial class GuardClausesExtensions
         [NotNull, CallerArgumentExpression(nameof(input))] string paramName = "",
         string? message = null)
     {
-        _ = Guard.Against.Null(input, paramName);
         _ = Guard.Against.Null(predicate, paramName);
 
         return !predicate(Guard.Against.Null(input, paramName))

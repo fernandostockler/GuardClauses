@@ -14,6 +14,9 @@
 	  <PackageIcon>extensions.png</PackageIcon>
 	  <RepositoryUrl>https://github.com/fernandostockler/GuardClauses.git</RepositoryUrl>
 	  <PackageTags>GuardClause;</PackageTags>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <IncludeSymbols>True</IncludeSymbols>
+	  <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
