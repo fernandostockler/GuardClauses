@@ -52,3 +52,9 @@ public class Person
 | `Guard.Against.Null`                | Throw a `ArgumentNullException` if the input is null.|
 | `Guard.Against.NullOrEmpty`         | Throw a `ArgumentNullException` if the input is null or empty.|
 | `Guard.Against.NullOrWhiteSpace`    | Throw a `ArgumentNullException` if the input is null, empty or white spaces.|
+| `And`                               | Throw a `ArgumentException` if the input does not satisfy a condition.|
+
+## References
+
+- Addressed by Nick Chapsas on YouTube: [How to write clean validation clauses in .NET](https://youtu.be/Tvx6DNarqDM).
+- Inspired by the GitHub project: [ardalis/GuardClauses](https://github.com/ardalis/GuardClauses).
