@@ -1,15 +1,13 @@
 # Guard Clauses
 
 Designed to fail early when encountering arguments outside the correct specification. 
-
+  
 > The bugs I hate are the ones that show up only after hours of successful operation, under unusual circumstances, or whose stack traces lead to dead ends.
-> 
 > -**_Martin Fowler_**.
 
 **_Fail fast_** is a technique that exposes potential bugs early in development, making them immediately visible.
 
 > Assertions are the key to failing fast. An assertion is a tiny piece of code that checks a condition and then fails if the condition isn’t met. So, when something starts to go wrong, an assertion detects the problem and makes it visible.
-> 
 > -**_Martin Fowler_**.
 
 ## Usage
@@ -75,11 +73,9 @@ namespace GuardClauses.Extensions;
 public static class ZipCodeExtensions
 {
     public static ZipCode InvalidZipCode(this IGuardClause guardClause, ZipCode zipCode)
-    {
-        return ValidateZipCode(zipCode)
+        =>  ValidateZipCode(zipCode)
             ? zipCode
             : throw new ArgumentException($"ZipCode ({zipCode}) is invalid.", nameof(zipCode));
-    }
 }
 
 ```
@@ -90,18 +86,13 @@ Usage:
 
 public class Address
 {
-    string Line1;
-    string Line2;
-    string City;
-    string State;
-    string ZipCode;
+    string Line1, Line2, City, State, ZipCode;
     
     public Address(string line1, string line2, string city, string state, ZipCode zipCode)
     {
         Line1 = line1;
-        Line2 = line2;
-        City = city;
-        State = state;
+        ...
+        ...
         ZipCode = Guard.Against.InvalidZipCode(zipCode);
     }
     
@@ -114,4 +105,4 @@ public class Address
 
 - Addressed by Nick Chapsas on YouTube: [How to write clean validation clauses in .NET](https://youtu.be/Tvx6DNarqDM).
 - Inspired by the GitHub project: [ardalis/GuardClauses](https://github.com/ardalis/GuardClauses).
-- Article Fail Fast from [www.martinfowler.com](https://www.martinfowler.com/ieeeSoftware/failFast.pdf).
+- Article: [Fail Fast - www.martinfowler.com](https://www.martinfowler.com/ieeeSoftware/failFast.pdf).
